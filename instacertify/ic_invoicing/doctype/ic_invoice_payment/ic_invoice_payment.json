@@ -1,0 +1,60 @@
+{
+ "name": "IC Invoice Payment",
+ "istable": 1,
+ "editable_grid": 1,
+ "fields": [
+  {
+   "fieldname": "payment_date",
+   "label": "Date",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "label": "Amount",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "mode",
+   "label": "Mode",
+   "fieldtype": "Select",
+   "options": "\nBank Transfer\nUPI\nCard\nCash\nPayment Link\nOther",
+   "default": "Payment Link",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "reference",
+   "label": "Reference",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR"
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "permissions": [],
+ "doctype": "DocType",
+ "module": "IC Invoicing",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

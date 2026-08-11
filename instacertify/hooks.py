@@ -8,7 +8,10 @@ app_version = "1.0.0"
 
 # InstaCertify brand colors injected into Desk
 app_include_css = ["/assets/instacertify/css/instacertify.css"]
-app_include_js = ["/assets/instacertify/js/instacertify_desk.js"]
+app_include_js = [
+	"/assets/instacertify/js/instacertify_desk.js",
+	"/assets/instacertify/js/gst_fetch.js",
+]
 
 web_include_css = ["/assets/instacertify/css/instacertify_web.css"]
 
@@ -28,6 +31,7 @@ fixtures = [
 					"IC All Ops Manager",
 					"IC Sales Person",
 					"IC Operations Manager",
+					"IC Customer Manager",
 					"IC HR",
 				],
 			]
@@ -66,12 +70,17 @@ website_route_rules = [
 	{"from_route": "/report/<path:token>", "to_route": "report_view"},
 	{"from_route": "/trf/<path:token>", "to_route": "trf_form"},
 	{"from_route": "/sample/<path:code>", "to_route": "sample_track"},
+	{"from_route": "/customer-project/<path:token>", "to_route": "customer_project"},
+	{"from_route": "/customer-credentials/<path:token>", "to_route": "customer_credentials"},
+	{"from_route": "/pay-invoice/<path:token>", "to_route": "pay_invoice"},
+	{"from_route": "/invoice-portal/<path:token>", "to_route": "invoice_portal"},
 ]
 
 # Scheduler
 scheduler_events = {
 	"daily": [
 		"instacertify.tasks.daily.expire_quotes",
+		"instacertify.tasks.daily.invoice_reminders_and_recurring",
 	]
 }
 

@@ -48,7 +48,9 @@
    "fieldtype": "Link",
    "options": "Currency",
    "default": "INR",
-   "reqd": 1
+   "reqd": 1,
+   "read_only": 1,
+   "description": "Auto: INR for India, USD for outside India"
   },
   {
    "fieldname": "conversion_rate",
@@ -82,6 +84,30 @@
    "fieldtype": "Data",
    "fetch_from": "customer.customer_name",
    "read_only": 1
+  },
+  {
+   "fieldname": "customer_country",
+   "label": "Customer Country",
+   "fieldtype": "Select",
+   "options": "\nIndia\nOther",
+   "default": "India",
+   "reqd": 1,
+   "in_standard_filter": 1,
+   "description": "India quotes are always INR. Outside India quotes are always USD."
+  },
+  {
+   "fieldname": "customer_gstin",
+   "label": "Customer GSTIN",
+   "fieldtype": "Data",
+   "depends_on": "eval:doc.customer_country=='India'",
+   "description": "Fetch via India Compliance from IC Settings / form button"
+  },
+  {
+   "fieldname": "gstin_legal_name",
+   "label": "GST Legal Name",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "depends_on": "eval:doc.customer_country=='India'"
   },
   {
    "fieldname": "column_break_2d7484",

@@ -1,0 +1,474 @@
+{
+ "name": "IC Invoice",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "is_submittable": 1,
+ "title_field": "title",
+ "search_fields": "customer,status,currency,gst_category",
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-INV-.YYYY.-.####\nIC-CN-.YYYY.-.####",
+   "default": "IC-INV-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "label": "Title",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nDraft\nPending Approval\nApproved\nSent\nPartially Paid\nPaid\nOverdue\nCredited\nCancelled",
+   "default": "Draft",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "is_credit_note",
+   "label": "Is Credit Note",
+   "fieldtype": "Check",
+   "default": 0
+  },
+  {
+   "fieldname": "against_invoice",
+   "label": "Against Invoice",
+   "fieldtype": "Link",
+   "options": "IC Invoice"
+  },
+  {
+   "fieldname": "column_break_940c2b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "invoice_date",
+   "label": "Invoice Date",
+   "fieldtype": "Date",
+   "default": "Today",
+   "reqd": 1
+  },
+  {
+   "fieldname": "due_date",
+   "label": "Due Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "project",
+   "label": "Project",
+   "fieldtype": "Link",
+   "options": "IC Project"
+  },
+  {
+   "fieldname": "quotation",
+   "label": "Quotation",
+   "fieldtype": "Link",
+   "options": "IC Quotation"
+  },
+  {
+   "fieldname": "customer_section",
+   "label": "Customer",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "label": "Customer Name",
+   "fieldtype": "Data",
+   "fetch_from": "customer.customer_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_gstin",
+   "label": "Customer GSTIN",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "billing_country",
+   "label": "Billing Country",
+   "fieldtype": "Select",
+   "options": "\nIndia\nOther",
+   "default": "India",
+   "reqd": 1
+  },
+  {
+   "fieldname": "billing_state",
+   "label": "Billing State / Place of Supply",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_379518",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_state",
+   "label": "Company State",
+   "fieldtype": "Data",
+   "default": "Maharashtra"
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "conversion_rate",
+   "label": "Exchange Rate",
+   "fieldtype": "Float",
+   "default": 1
+  },
+  {
+   "fieldname": "skip_approval",
+   "label": "Skip Approval (Auto Approve)",
+   "fieldtype": "Check",
+   "default": 0
+  },
+  {
+   "fieldname": "gst_determination_section",
+   "label": "GST Determination",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "gst_category",
+   "label": "GST Category",
+   "fieldtype": "Select",
+   "options": "\nRegistered\nUnregistered\nExport\nSEZ\nExempt",
+   "default": "Registered"
+  },
+  {
+   "fieldname": "tax_type",
+   "label": "Tax Type",
+   "fieldtype": "Select",
+   "options": "\nCGST+SGST\nIGST\nExport (Zero Rated)\nExempt\nReverse Charge",
+   "read_only": 1
+  },
+  {
+   "fieldname": "place_of_supply",
+   "label": "Place of Supply",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "is_reverse_charge",
+   "label": "Reverse Charge Applicable",
+   "fieldtype": "Check",
+   "default": 0,
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_6a1389",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "cgst_rate",
+   "label": "CGST %",
+   "fieldtype": "Percent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sgst_rate",
+   "label": "SGST %",
+   "fieldtype": "Percent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "igst_rate",
+   "label": "IGST %",
+   "fieldtype": "Percent",
+   "read_only": 1
+  },
+  {
+   "fieldname": "default_tax_rate",
+   "label": "Default Tax Rate %",
+   "fieldtype": "Percent",
+   "default": 18
+  },
+  {
+   "fieldname": "gstin_valid",
+   "label": "GSTIN Valid",
+   "fieldtype": "Check",
+   "read_only": 1
+  },
+  {
+   "fieldname": "gstin_validation_message",
+   "label": "GSTIN Validation",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "line_items_section",
+   "label": "Line Items",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "items",
+   "label": "Items",
+   "fieldtype": "Table",
+   "options": "IC Invoice Item"
+  },
+  {
+   "fieldname": "totals_section",
+   "label": "Totals",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "subtotal",
+   "label": "Subtotal",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "discount_amount",
+   "label": "Discount",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "default": 0
+  },
+  {
+   "fieldname": "tax_total",
+   "label": "Tax Total",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_b92ca9",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "grand_total",
+   "label": "Grand Total",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "paid_amount",
+   "label": "Paid Amount",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "balance_due",
+   "label": "Balance Due",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payments_section",
+   "label": "Payments",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "payments",
+   "label": "Payments",
+   "fieldtype": "Table",
+   "options": "IC Invoice Payment"
+  },
+  {
+   "fieldname": "payment_link",
+   "label": "Payment Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "payment_token",
+   "label": "Payment Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "recurring_section",
+   "label": "Recurring",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "is_recurring",
+   "label": "Recurring Invoice",
+   "fieldtype": "Check",
+   "default": 0
+  },
+  {
+   "fieldname": "recur_every_days",
+   "label": "Recur Every (Days)",
+   "fieldtype": "Int",
+   "default": 30,
+   "depends_on": "eval:doc.is_recurring"
+  },
+  {
+   "fieldname": "next_recur_date",
+   "label": "Next Recur Date",
+   "fieldtype": "Date",
+   "depends_on": "eval:doc.is_recurring"
+  },
+  {
+   "fieldname": "reminders_section",
+   "label": "Reminders",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "auto_reminders",
+   "label": "Automatic Reminders",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "reminder_log",
+   "label": "Reminder Log",
+   "fieldtype": "Table",
+   "options": "IC Invoice Reminder"
+  },
+  {
+   "fieldname": "portal_&_notes_section",
+   "label": "Portal & Notes",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "customer_portal_token",
+   "label": "Customer Portal Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "customer_portal_link",
+   "label": "Customer Invoice Portal Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "terms",
+   "label": "Terms",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Small Text"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Customer Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Invoicing",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

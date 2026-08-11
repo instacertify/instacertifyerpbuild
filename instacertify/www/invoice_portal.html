@@ -1,0 +1,44 @@
+{% extends "templates/web.html" %}
+{% block title %}Invoice Portal — InstaCertify{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal"><div class="ic-portal-shell">
+<div class="ic-portal-brand"><div class="logo">InstaCertify</div><div>Customer Invoice Portal</div></div>
+<div class="ic-portal-card">
+  <div id="loading">Loading…</div>
+  <div id="content" style="display:none">
+    <h1 id="title"></h1>
+    <div class="ic-meta">
+      <div><label>Status</label><span id="status"></span></div>
+      <div><label>Currency</label><span id="currency"></span></div>
+      <div><label>GST</label><span id="tax"></span></div>
+      <div><label>Place of Supply</label><span id="pos"></span></div>
+      <div><label>Total</label><strong id="total"></strong></div>
+      <div><label>Balance</label><strong id="balance"></strong></div>
+    </div>
+    <p><a id="pay" class="ic-btn ic-btn-accept" href="#">Pay Invoice</a></p>
+  </div>
+</div></div></div>
+<script>
+const token={{ token|tojson }};
+frappe.ready(()=>{
+  frappe.call({
+    method:'instacertify.api.invoice.get_invoice_portal',
+    args:{token},
+    callback(r){
+      const d=r.message;
+      document.getElementById('loading').style.display='none';
+      document.getElementById('content').style.display='block';
+      document.getElementById('title').textContent=d.title;
+      document.getElementById('status').textContent=d.status;
+      document.getElementById('currency').textContent=d.currency;
+      document.getElementById('tax').textContent=d.tax_type;
+      document.getElementById('pos').textContent=d.place_of_supply||'—';
+      document.getElementById('total').textContent=`${d.grand_total} ${d.currency}`;
+      document.getElementById('balance').textContent=`${d.balance_due} ${d.currency}`;
+      if(d.payment_link) document.getElementById('pay').href=d.payment_link;
+    }
+  });
+});
+</script>
+{% endblock %}

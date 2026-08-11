@@ -1,0 +1,47 @@
+{
+ "name": "IC Invoice Reminder",
+ "istable": 1,
+ "editable_grid": 1,
+ "fields": [
+  {
+   "fieldname": "reminded_on",
+   "label": "Reminded On",
+   "fieldtype": "Datetime",
+   "default": "Now",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "channel",
+   "label": "Channel",
+   "fieldtype": "Select",
+   "options": "\nEmail\nSMS\nWhatsApp",
+   "default": "Email",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "message",
+   "label": "Message",
+   "fieldtype": "Small Text",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nSent\nFailed",
+   "default": "Sent",
+   "in_list_view": 1
+  }
+ ],
+ "permissions": [],
+ "doctype": "DocType",
+ "module": "IC Invoicing",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator",
+ "sort_field": "modified",
+ "sort_order": "DESC"
+}

@@ -26,7 +26,13 @@
 - Oversee projects: progress remarks, working hours, credentials, incidents
 - Customer document requests and verification
 - Test request / sample status updates
+- Share customer project portal + login credentials
 - Read quotations (no create)
+
+## IC Customer Manager
+- Customer-facing project coordination
+- Share project portal links and customer login credentials
+- View/update project messages, document requests, invoices
 
 ## IC HR
 - Employee profiles

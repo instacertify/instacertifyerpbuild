@@ -3,6 +3,15 @@ import secrets
 import frappe
 from frappe import _
 
+from instacertify.utils.currency import currency_for_country, resolve_customer_country
+
+
+@frappe.whitelist()
+def resolve_quote_currency(customer: str | None = None, lead: str | None = None, customer_country: str | None = None):
+	"""India → INR, Outside India → USD."""
+	country = resolve_customer_country(customer=customer, lead=lead, explicit=customer_country)
+	return {"customer_country": country, "currency": currency_for_country(country)}
+
 
 @frappe.whitelist()
 def apply_template(template: str, quotation: str | None = None):
@@ -14,7 +23,7 @@ def apply_template(template: str, quotation: str | None = None):
 		"certification_timeline": tpl.certification_timeline,
 		"force_majeure": tpl.force_majeure,
 		"terms_and_conditions": tpl.terms_and_conditions,
-		"currency": tpl.currency or "INR",
+		# Currency is decided by customer country, not template
 		"cost_lines": [],
 		"testing_lines": [],
 	}

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>InstaCertify ERP — Demo Walkthrough</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700;800&family=Fraunces:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">InstaCertify</div>
+      <nav>
+        <button class="nav active" data-view="dashboard">Dashboard</button>
+        <button class="nav" data-view="leads">Leads CRM</button>
+        <button class="nav" data-view="quotes">Quotations</button>
+        <button class="nav" data-view="projects">Projects</button>
+        <button class="nav" data-view="testing">Labs & Samples</button>
+        <button class="nav" data-view="portal">Customer Portal</button>
+        <button class="nav" data-view="projectcard">Project Card</button>
+        <button class="nav" data-view="invoices">Invoices</button>
+        <button class="nav" data-view="flow">Process Flow</button>
+      </nav>
+      <div class="role-pill">Role: IC Admin</div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">ERPNext v16 · Custom App Demo</div>
+          <h1 id="page-title">InstaCertify Dashboard</h1>
+        </div>
+        <div class="user">Nikhil Tiwari</div>
+      </header>
+
+      <section id="view-dashboard" class="view active">
+        <div class="hero">
+          <h2>Good afternoon, Nikhil</h2>
+          <p>Your consulting, certification and testing command centre</p>
+        </div>
+        <div class="cards">
+          <article class="card" style="--c:#0B5FFF"><span>Open Leads</span><strong>12</strong></article>
+          <article class="card" style="--c:#FF7A00"><span>Pending Quotes</span><strong>7</strong></article>
+          <article class="card" style="--c:#128C7E"><span>Active Projects</span><strong>9</strong></article>
+          <article class="card" style="--c:#6C5CE7"><span>Samples In Lab</span><strong>4</strong></article>
+        </div>
+        <div class="panel">
+          <h3>Pending tasks & progress</h3>
+          <div class="task"><b>Quote</b><span>ISO 9001 — Acme Foods</span><em>Shared</em></div>
+          <div class="task"><b>Project</b><span>Product Testing — Nova Labs</span><em>In Progress · 65%</em></div>
+          <div class="task"><b>Sample</b><span>TR-2026-014 · Dispatched to Lab</span><em>Tracking</em></div>
+        </div>
+      </section>
+
+      <section id="view-leads" class="view">
+        <div class="panel">
+          <div class="panel-head">
+            <h3>IC Lead</h3>
+            <button class="btn">+ New Lead</button>
+          </div>
+          <table>
+            <thead><tr><th>Person</th><th>Company</th><th>Type</th><th>Source</th><th>Size</th><th>State</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>Riya Shah</td><td>Acme Foods</td><td>Service</td><td>IndiaMART</td><td>Medium</td><td>Maharashtra</td><td><span class="tag orange">Open</span></td></tr>
+              <tr><td>Amit Verma</td><td>Nova Labs</td><td>Testing</td><td>Google</td><td>Small</td><td>Karnataka</td><td><span class="tag blue">Qualified</span></td></tr>
+              <tr><td>Sana Khan</td><td>GreenChem</td><td>Both</td><td>Consultant</td><td>Large</td><td>Delhi</td><td><span class="tag green">Won</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="view-quotes" class="view">
+        <div class="split">
+          <div class="panel">
+            <h3>IC Quotation · IC-QTN-2026-0042</h3>
+            <label>Template</label>
+            <select><option>ISO 9001 Standard Pack</option><option>Product Testing Pack</option><option>Certificate Renewal</option></select>
+            <label>Service</label>
+            <input value="ISO 9001 Certification" readonly />
+            <label>Currency</label>
+            <input value="INR" readonly />
+            <table class="mini">
+              <thead><tr><th>Cost Type</th><th>Payable To</th><th>Amount</th><th>Revenue?</th></tr></thead>
+              <tbody>
+                <tr><td>Consulting</td><td>InstaCertify</td><td>₹75,000</td><td>Yes</td></tr>
+                <tr><td>Lab / Testing</td><td>InstaCertify</td><td>₹18,000</td><td>Yes</td></tr>
+                <tr><td>Government Fees</td><td>Government Portal</td><td>₹12,000</td><td>No</td></tr>
+              </tbody>
+            </table>
+            <div class="totals">
+              <div>Our Revenue <b>₹93,000</b></div>
+              <div>Grand Total <b>₹1,05,000</b></div>
+            </div>
+            <div class="actions">
+              <button class="btn">Share with Customer</button>
+              <button class="btn ghost">Save as Template</button>
+              <button class="btn accent">Start Project</button>
+            </div>
+          </div>
+          <div class="panel portal-preview">
+            <div class="logo">InstaCertify</div>
+            <h4>Customer Quote Link</h4>
+            <p>/quote/ab12…xy90</p>
+            <div class="qr">QR</div>
+            <p class="muted">Barcode IC-QUOTATION-9F2A…</p>
+            <div class="actions">
+              <button class="btn">Accept Quote</button>
+              <button class="btn ghost">Request Changes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-projects" class="view">
+        <div class="panel">
+          <h3>IC Project · Acme Foods — ISO 9001</h3>
+          <div class="progress"><div style="width:65%"></div></div>
+          <p class="muted">Progress 65% · Operations Manager assigned</p>
+          <div class="grid3">
+            <div class="tile"><h4>Deliverables</h4><p>Certificate draft.pdf<br>Audit photos.zip</p></div>
+            <div class="tile"><h4>Credentials</h4><p>Portal login stored<br>GST credentials</p></div>
+            <div class="tile"><h4>Document Library</h4><p>TRF shared<br>3/5 files uploaded</p></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-testing" class="view">
+        <div class="split">
+          <div class="panel">
+            <h3>Lab Library</h3>
+            <table>
+              <thead><tr><th>Lab</th><th>Location</th><th>Accreditation</th><th>Price</th></tr></thead>
+              <tbody>
+                <tr><td>NABL Test Hub</td><td>Pune</td><td>ISO/IEC 17025</td><td>₹4,500</td></tr>
+                <tr><td>Metro Analytical</td><td>Chennai</td><td>NABL</td><td>₹6,200</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="panel">
+            <h3>Sample Tracking</h3>
+            <div class="steps">
+              <span class="done">Received</span>
+              <span class="done">Dispatched</span>
+              <span class="now">Testing</span>
+              <span>Report</span>
+              <span>Shared</span>
+            </div>
+            <p>Tracking code <b>SMP-A91C2F</b></p>
+            <div class="qr">Sample QR</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-portal" class="view">
+        <div class="panel portal-preview wide">
+          <div class="logo">InstaCertify</div>
+          <h3>Customer portals (no login)</h3>
+          <ul class="links">
+            <li><code>/quote/&lt;token&gt;</code> — accept or request changes</li>
+            <li><code>/docs-upload/&lt;token&gt;</code> — checklist PDF/image upload</li>
+            <li><code>/customer-project/&lt;token&gt;</code> — project progress card</li>
+            <li><code>/customer-credentials/&lt;token&gt;</code> — shareable login credentials</li>
+            <li><code>/pay-invoice/&lt;token&gt;</code> — Zoho-style payment link</li>
+            <li><code>/invoice-portal/&lt;token&gt;</code> — customer invoice portal</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="view-projectcard" class="view">
+        <div class="panel portal-preview" style="max-width:480px;margin:0 auto;border-top:5px solid #0B5FFF">
+          <div class="logo">INSTACERTIFY</div>
+          <h2 style="margin:16px 0 4px">ABC Electronics</h2>
+          <h3 style="margin:0 0 14px;color:#5b677a;font-weight:600">BIS CRS Certification</h3>
+          <div style="display:flex;justify-content:space-between;font-weight:700"><span>Project Progress</span><span>65%</span></div>
+          <div class="progress"><div style="width:65%"></div></div>
+          <h4>DOCUMENTS</h4>
+          <p style="color:#0f7a5a;margin:6px 0">✓ Company Registration</p>
+          <p style="color:#0f7a5a;margin:6px 0">✓ Authorization Letter</p>
+          <p style="color:#0f7a5a;margin:6px 0">✓ Test Report</p>
+          <p style="color:#b35400;margin:6px 0">⚠ Product Specification · UPLOAD</p>
+          <p style="color:#b35400;margin:6px 0">⚠ Trademark Certificate · UPLOAD</p>
+          <div style="text-align:center;margin:14px 0"><button class="btn">Upload Documents</button></div>
+          <h4>REPORTS</h4>
+          <p>📄 Test Report — View / Download</p>
+          <p>📄 Application Report — View / Download</p>
+          <h4>MESSAGES</h4>
+          <p style="background:#f5f8ff;padding:10px;border-left:4px solid #0B5FFF;border-radius:8px">"Please provide updated Product Specification and Trademark Certificate…"</p>
+        </div>
+      </section>
+
+      <section id="view-invoices" class="view">
+        <div class="panel">
+          <h3>IC Invoice · Zoho-style</h3>
+          <table>
+            <thead><tr><th>Invoice</th><th>Customer</th><th>Currency</th><th>Tax</th><th>Total</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td>IC-INV-2026-0001</td><td>ABC Electronics</td><td>INR</td><td>CGST+SGST</td><td>₹1,09,740</td><td><span class="tag blue">Approved</span></td></tr>
+              <tr><td>IC-INV-2026-0002</td><td>Nova Labs GmbH</td><td>USD</td><td>Export (Zero Rated)</td><td>$2,200</td><td><span class="tag orange">Partially Paid</span></td></tr>
+            </tbody>
+          </table>
+          <p class="muted" style="margin-top:12px">Auto: place of supply · HSN/SAC · GSTIN validation · reverse charge · payment links · reminders · credit notes · recurring</p>
+        </div>
+      </section>
+
+      <section id="view-flow" class="view">
+        <div class="panel">
+          <h3>End-to-end process</h3>
+          <div class="flow">
+            <div>Lead CRM</div><i>→</i>
+            <div>Quote + Template</div><i>→</i>
+            <div>Customer Accept</div><i>→</i>
+            <div>Project</div><i>→</i>
+            <div>Docs / TRF</div><i>→</i>
+            <div>Lab & Sample</div><i>→</i>
+            <div>Report / Invoice</div>
+          </div>
+          <p class="muted">Revenue counted from Consulting + Lab charges · Govt fees tracked separately · Roles: Admin, All Ops Manager, Sales, Operations, HR</p>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

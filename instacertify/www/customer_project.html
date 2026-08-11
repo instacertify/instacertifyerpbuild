@@ -1,0 +1,132 @@
+{% extends "templates/web.html" %}
+{% block title %}InstaCertify Project Portal{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<style>
+.ic-proj-card{max-width:520px;margin:24px auto;background:#fff;border-radius:18px;padding:28px 26px;box-shadow:0 16px 40px rgba(21,32,51,.1);border-top:5px solid #0B5FFF}
+.ic-proj-card h1{margin:0;font-size:1.35rem;letter-spacing:.06em;background:linear-gradient(90deg,#0B5FFF,#FF7A00);-webkit-background-clip:text;background-clip:text;color:transparent}
+.ic-proj-card h2{margin:18px 0 4px;font-size:1.25rem}.ic-proj-card h3{margin:4px 0 16px;color:#5b677a;font-weight:600;font-size:1rem}
+.bar{height:12px;background:#e8eef7;border-radius:999px;overflow:hidden;margin:8px 0 18px}.bar>i{display:block;height:100%;background:linear-gradient(90deg,#0B5FFF,#FF7A00)}
+.sec{margin-top:20px;padding-top:14px;border-top:1px solid #e8eef7}.sec h4{margin:0 0 10px;font-size:.8rem;letter-spacing:.08em;color:#5b677a}
+.doc{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 0;border-bottom:1px dashed #e1e8f3}
+.doc.ok{color:#0f7a5a}.doc.warn{color:#b35400}
+.msg{background:#f5f8ff;border-left:4px solid #0B5FFF;padding:10px 12px;border-radius:8px;margin:8px 0}
+.cred{background:#fff7ef;border:1px solid #ffd2a8;border-radius:10px;padding:10px 12px;margin:8px 0}
+</style>
+<div class="ic-portal">
+  <div class="ic-proj-card" id="card">
+    <div id="loading">Loading project…</div>
+    <div id="content" style="display:none">
+      <h1 id="brand">INSTACERTIFY</h1>
+      <h2 id="customer"></h2>
+      <h3 id="cert"></h3>
+      <div style="display:flex;justify-content:space-between;font-weight:700"><span>Project Progress</span><span id="pct"></span></div>
+      <div class="bar"><i id="bar"></i></div>
+
+      <div class="sec">
+        <h4>DOCUMENTS</h4>
+        <div id="docs"></div>
+        <div style="margin-top:12px;text-align:center">
+          <label class="ic-btn ic-btn-accept" style="display:inline-block;cursor:pointer">
+            Upload Documents
+            <input id="bulk" type="file" accept=".pdf,.png,.jpg,.jpeg" style="display:none" />
+          </label>
+        </div>
+      </div>
+
+      <div class="sec">
+        <h4>REPORTS</h4>
+        <div id="reports"></div>
+      </div>
+
+      <div class="sec">
+        <h4>MESSAGES</h4>
+        <div id="messages"></div>
+      </div>
+
+      <div class="sec" id="cred-sec" style="display:none">
+        <h4>LOGIN CREDENTIALS</h4>
+        <div id="credentials"></div>
+      </div>
+    </div>
+    <div id="error" style="display:none;color:#b00020"></div>
+  </div>
+</div>
+<script>
+const token = {{ token|tojson }};
+let pendingDoc = null;
+frappe.ready(() => {
+  load();
+  document.getElementById('bulk').addEventListener('change', async (e) => {
+    if (!e.target.files.length || !pendingDoc) {
+      frappe.msgprint('Select an UPLOAD document row first.');
+      return;
+    }
+    await uploadFile(pendingDoc, e.target.files[0]);
+  });
+});
+function load(){
+  frappe.call({
+    method:'instacertify.api.portal.get_customer_project',
+    args:{token},
+    callback(r){
+      const d=r.message;
+      document.getElementById('loading').style.display='none';
+      document.getElementById('content').style.display='block';
+      document.getElementById('brand').textContent=d.brand||'INSTACERTIFY';
+      document.getElementById('customer').textContent=d.customer_name;
+      document.getElementById('cert').textContent=d.certification_name;
+      document.getElementById('pct').textContent=(d.percent_complete||0)+'%';
+      document.getElementById('bar').style.width=(d.percent_complete||0)+'%';
+      const docs=document.getElementById('docs'); docs.innerHTML='';
+      (d.documents||[]).forEach(doc=>{
+        const ok=['Uploaded','Verified'].includes(doc.status);
+        const el=document.createElement('div');
+        el.className='doc '+(ok?'ok':'warn');
+        el.innerHTML=`<span>${ok?'✓':'⚠'} ${frappe.utils.escape_html(doc.name)}</span>
+          <span>${ok ? (doc.uploaded_file?`<a href="${doc.uploaded_file}" target="_blank">View</a>`:'Done') : `<button class="ic-btn ic-btn-change" data-name="${frappe.utils.escape_html(doc.name)}" data-req="${doc.request||''}">UPLOAD</button>`}</span>`;
+        const btn=el.querySelector('button');
+        if(btn){ btn.onclick=()=>{ pendingDoc={name:doc.name, request:doc.request}; document.getElementById('bulk').click(); }; }
+        docs.appendChild(el);
+      });
+      if(!(d.documents||[]).length) docs.innerHTML='<div class="muted">No documents requested yet.</div>';
+      const reps=document.getElementById('reports'); reps.innerHTML='';
+      (d.reports||[]).forEach(rep=>{
+        reps.insertAdjacentHTML('beforeend', `<div class="doc"><span>📄 ${frappe.utils.escape_html(rep.report_name)}</span><span><a href="${rep.report_file}" target="_blank">View / Download</a></span></div>`);
+      });
+      if(!(d.reports||[]).length) reps.innerHTML='<div class="muted">No reports yet.</div>';
+      const msgs=document.getElementById('messages'); msgs.innerHTML='';
+      (d.messages||[]).forEach(m=>{ msgs.insertAdjacentHTML('beforeend', `<div class="msg">"${frappe.utils.escape_html(m.message)}"</div>`); });
+      if(!(d.messages||[]).length) msgs.innerHTML='<div class="muted">No messages.</div>';
+      if((d.credentials||[]).length){
+        document.getElementById('cred-sec').style.display='block';
+        const box=document.getElementById('credentials'); box.innerHTML='';
+        d.credentials.forEach(c=>{
+          box.insertAdjacentHTML('beforeend', `<div class="cred"><b>${frappe.utils.escape_html(c.system_name)}</b><br>User: ${frappe.utils.escape_html(c.username||'')}<br>Password: ${frappe.utils.escape_html(c.password||'')}<br>${c.url?`<a href="${c.url}" target="_blank">${c.url}</a>`:''}</div>`);
+        });
+      }
+    },
+    error(){
+      document.getElementById('loading').style.display='none';
+      document.getElementById('error').style.display='block';
+      document.getElementById('error').textContent='Invalid project link.';
+    }
+  });
+}
+async function uploadFile(docMeta, file){
+  const fd=new FormData();
+  fd.append('file', file, file.name);
+  fd.append('is_private', 0);
+  fd.append('folder', 'Home/IC Customer Uploads');
+  const res=await fetch('/api/method/upload_file',{method:'POST', body:fd, headers:{'X-Frappe-CSRF-Token': frappe.csrf_token}});
+  const json=await res.json();
+  const file_url=json.message && json.message.file_url;
+  if(!file_url){ frappe.msgprint('Upload failed'); return; }
+  frappe.call({
+    method:'instacertify.api.portal.upload_project_document',
+    args:{ token, document_name: docMeta.name, file_url, request: docMeta.request },
+    callback(){ pendingDoc=null; load(); }
+  });
+}
+</script>
+{% endblock %}

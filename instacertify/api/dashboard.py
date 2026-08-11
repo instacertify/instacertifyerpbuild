@@ -19,30 +19,14 @@ def get_home_dashboard():
 	is_sales = "IC Sales Person" in roles
 	is_ops = "IC Operations Manager" in roles
 
-	def count(doctype, filters=None):
-		try:
-			return frappe.db.count(doctype, filters or {})
-		except Exception:
-			return 0
-
-	lead_filters = {}
-	quote_filters = {}
-	project_filters = {}
-	if is_sales and not elevated:
-		lead_filters = [["assigned_to", "=", user]]
-		quote_filters = [["sales_person", "=", user]]
-		project_filters = [["sales_person", "=", user]]
-
-	pending_quotes = count(
-		"IC Quotation",
-		{**(dict(quote_filters),), "status": ["in", ["Shared", "Changes Requested", "Finalised"]]},
-	)
-	# frappe.db.count doesn't take dict with list ops that way easily — use get_all
 	def count_status(doctype, status_list, owner_field=None):
 		filters = [["status", "in", status_list]]
 		if owner_field and is_sales and not elevated:
 			filters.append([owner_field, "=", user])
-		return len(frappe.get_all(doctype, filters=filters, limit=500))
+		try:
+			return len(frappe.get_all(doctype, filters=filters, limit=500))
+		except Exception:
+			return 0
 
 	cards = [
 		{
@@ -66,27 +50,24 @@ def get_home_dashboard():
 			"route": "/app/ic-project",
 		},
 		{
-			"label": _("Samples In Lab"),
+			"label": _("Open Invoices"),
 			"value": count_status(
-				"IC Test Request",
-				["Sample Received", "Dispatched to Lab", "Testing In Process"],
-				"sales_person",
+				"IC Invoice", ["Approved", "Sent", "Partially Paid", "Overdue", "Pending Approval"], None
 			),
 			"color": "#6C5CE7",
-			"route": "/app/ic-test-request",
+			"route": "/app/ic-invoice",
 		},
 	]
 
 	tasks = []
-	# Pending quote responses
 	for q in frappe.get_all(
 		"IC Quotation",
 		filters=(
 			[["status", "in", ["Shared", "Changes Requested"]]]
-			+ ([[ "sales_person", "=", user]] if is_sales and not elevated else [])
+			+ ([["sales_person", "=", user]] if is_sales and not elevated else [])
 		),
 		fields=["name", "title", "status", "customer_name", "modified"],
-		limit=8,
+		limit=6,
 		order_by="modified desc",
 	):
 		tasks.append(
@@ -100,20 +81,30 @@ def get_home_dashboard():
 			}
 		)
 
-	for p in frappe.get_all(
+	project_filters = [["status", "in", ["Open", "In Progress"]]]
+	if is_sales and not elevated:
+		project_filters.append(["sales_person", "=", user])
+	elif is_ops and not elevated:
+		project_filters.append(["operations_manager", "=", user])
+
+	projects = frappe.get_all(
 		"IC Project",
-		filters=(
-			[["status", "in", ["Open", "In Progress"]]]
-			+ (
-				[["sales_person", "=", user]]
-				if is_sales and not elevated
-				else ([["operations_manager", "=", user]] if is_ops and not elevated else [])
-			)
-		),
-		fields=["name", "project_name", "status", "percent_complete", "customer"],
-		limit=8,
+		filters=project_filters,
+		fields=[
+			"name",
+			"project_name",
+			"status",
+			"percent_complete",
+			"customer",
+			"sales_person",
+			"operations_manager",
+			"customer_manager",
+		],
+		limit=20,
 		order_by="modified desc",
-	):
+	)
+
+	for p in projects[:8]:
 		tasks.append(
 			{
 				"type": "Project",
@@ -125,10 +116,49 @@ def get_home_dashboard():
 			}
 		)
 
+	# Person chart — workload by assignee
+	person_map = {}
+	for p in projects:
+		for field in ("sales_person", "operations_manager", "customer_manager"):
+			person = p.get(field)
+			if not person:
+				continue
+			bucket = person_map.setdefault(
+				person, {"user": person, "projects": 0, "avg_progress": 0, "_progress_sum": 0}
+			)
+			bucket["projects"] += 1
+			bucket["_progress_sum"] += p.percent_complete or 0
+	person_chart = []
+	for user_id, bucket in person_map.items():
+		label = frappe.db.get_value("User", user_id, "full_name") or user_id
+		avg = round(bucket["_progress_sum"] / bucket["projects"], 1) if bucket["projects"] else 0
+		person_chart.append(
+			{
+				"user": user_id,
+				"label": label,
+				"projects": bucket["projects"],
+				"avg_progress": avg,
+			}
+		)
+	person_chart.sort(key=lambda x: x["projects"], reverse=True)
+
+	project_progress = [
+		{
+			"name": p.name,
+			"label": p.project_name,
+			"progress": p.percent_complete or 0,
+			"owner": frappe.db.get_value("User", p.sales_person, "full_name") if p.sales_person else "—",
+			"status": p.status,
+		}
+		for p in projects
+	]
+
 	return {
 		"greeting": f"{greeting}, {full_name}",
 		"roles": list(roles),
 		"cards": cards,
 		"tasks": tasks,
+		"person_chart": person_chart,
+		"project_progress": project_progress,
 		"brand": {"primary": "#0B5FFF", "accent": "#FF7A00"},
 	}

@@ -20,23 +20,36 @@ Custom Frappe app for **InstaCertify** — a consulting & certification firm. Bu
 - **Dashboard** — personal greeting, pending tasks, colourful KPI cards, process diagram
 - **Currency** — INR primary, multi-currency selectable
 
-## Install on ERPNext v16
+## Install on latest ERPNext v16
+
+Use the latest ERPNext from GitHub:
 
 ```bash
 # on your bench
 cd frappe-bench
+bench get-app --branch version-16 https://github.com/frappe/erpnext.git
+bench get-app --branch version-16 https://github.com/frappe/hrms.git   # optional but recommended
+bench get-app --branch version-16 https://github.com/resilient-tech/india-compliance.git  # GST fetch
 bench get-app https://github.com/instacertify/instacertifyerpbuild.git
-# or:  cp -r /path/to/instacertifyerpbuild apps/instacertify
+bench --site <your-site> install-app erpnext
+bench --site <your-site> install-app hrms
+bench --site <your-site> install-app india_compliance
 bench --site <your-site> install-app instacertify
 bench --site <your-site> migrate
 bench build --app instacertify
 bench --site <your-site> clear-cache
 ```
 
-Recommended apps on the same site:
+Configure GST APIs via **IC Settings → India Compliance · GST Setup**  
+(docs: https://docs.indiacompliance.app/docs/configuration/gst_setup).
 
-- `erpnext` (v16)
-- `hrms` (for Salary Slip, Attendance, Holiday List)
+### Load demo data (ABC Electronics portal + invoices)
+
+From **InstaCertify Dashboard → Load Demo Data**, or:
+
+```bash
+bench --site <site> execute instacertify.ic_setup.seed.seed_demo_data
+```
 
 Python deps (auto if listed in app requirements):
 
@@ -79,11 +92,17 @@ bench pip install qrcode Pillow
 | `/trf/<token>` | Test Request Form view |
 | `/report/<token>` | Shared lab report |
 | `/sample/<code>` | Sample tracking |
+| `/customer-project/<token>` | Customer project card (progress, docs, reports, messages, credentials) |
+| `/customer-credentials/<token>` | Shareable customer login credentials |
+| `/pay-invoice/<token>` | Zoho-style payment link (partial payments) |
+| `/invoice-portal/<token>` | Customer invoice portal |
 
 ## Docs
 
 - [Architecture & flow diagram](docs/ARCHITECTURE.md)
 - [Roles & permissions](docs/ROLES_AND_PERMISSIONS.md)
+- [Customer portal & Zoho-style invoicing](docs/CUSTOMER_PORTAL_AND_INVOICING.md)
+- [India Compliance GST setup](docs/INDIA_COMPLIANCE_GST_SETUP.md)
 
 ## Brand
 

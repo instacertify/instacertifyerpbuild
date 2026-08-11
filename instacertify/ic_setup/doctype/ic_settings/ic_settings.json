@@ -66,6 +66,65 @@
    "default": 30
   },
   {
+   "fieldname": "india_compliance_section",
+   "label": "India Compliance \u00b7 GST Setup",
+   "fieldtype": "Section Break",
+   "description": "Configure GST data fetching via India Compliance. Docs: https://docs.indiacompliance.app/docs/configuration/gst_setup"
+  },
+  {
+   "fieldname": "enable_india_compliance_gst_fetch",
+   "label": "Enable India Compliance GST Data Fetching",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "company_gstin",
+   "label": "Company GSTIN",
+   "fieldtype": "Data",
+   "description": "Must match Company GSTIN configured in GST Settings"
+  },
+  {
+   "fieldname": "use_gst_sandbox_mode",
+   "label": "Prefer Sandbox Mode (testing)",
+   "fieldtype": "Check",
+   "default": 0,
+   "description": "Reminder only \u2014 actual sandbox toggle is in GST Settings"
+  },
+  {
+   "fieldname": "column_break_ic_gst",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "auto_fetch_gstin_on_lead",
+   "label": "Auto-fetch GSTIN on Lead",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "auto_fetch_gstin_on_quotation",
+   "label": "Auto-fetch GSTIN on Quotation",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "auto_fetch_gstin_on_invoice",
+   "label": "Auto-fetch GSTIN on Invoice",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "india_compliance_docs_html",
+   "label": "Setup Guide",
+   "fieldtype": "HTML",
+   "options": "<div style='padding:12px;background:#e8f0ff;border-radius:10px;border-left:4px solid #0B5FFF'>\n<b>India Compliance GST Setup</b><br>\n1. Install app: <code>bench get-app --branch version-16 https://github.com/resilient-tech/india-compliance.git</code><br>\n2. <code>bench --site &lt;site&gt; install-app india_compliance</code><br>\n3. Open <b>GST Settings</b> \u2192 enable API features, add GSP credentials<br>\n4. Configure GST Accounts (Input / Output / Reverse Charge) per company<br>\n5. Update Company, Customer, Supplier &amp; Address with GSTIN<br>\nDocs: <a href='https://docs.indiacompliance.app/docs/configuration/gst_setup' target='_blank'>GST Setup</a>\n \u00b7 <a href='https://docs.indiacompliance.app/docs/ewaybill-and-einvoice/gst_settings' target='_blank'>API / GSP Credentials</a>\n</div>"
+  },
+  {
+   "fieldname": "gst_accounts_note",
+   "label": "GST Accounts Note",
+   "fieldtype": "Small Text",
+   "default": "Ensure 3 GST Account rows per company in GST Settings: Input, Output, Reverse Charge (CGST/SGST/IGST/Cess as applicable)."
+  },
+  {
    "fieldname": "notifications_section",
    "label": "Notifications",
    "fieldtype": "Section Break",
