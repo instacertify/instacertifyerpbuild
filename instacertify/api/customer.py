@@ -26,15 +26,25 @@ def customer_link_query(doctype, txt, searchfield, start, page_len, filters):
 			country_cond = " AND addr.country IS NOT NULL AND addr.country != '' AND addr.country != 'India' "
 
 	txt = txt or ""
+	# Link dropdown: value = name, description = suggested label
 	return frappe.db.sql(
 		f"""
-		SELECT DISTINCT cust.name, cust.customer_name, cust.customer_group, cust.territory
+		SELECT DISTINCT
+			cust.name,
+			CONCAT(
+				cust.customer_name,
+				CASE
+					WHEN IFNULL(cust.customer_group, '') != '' THEN CONCAT(' · ', cust.customer_group)
+					ELSE ''
+				END
+			) AS description
 		FROM `tabCustomer` cust
 		{country_join}
 		WHERE cust.docstatus < 2
 			AND cust.disabled = 0
 			AND (
-				cust.name LIKE %(txt)s
+				%(txt)s = ''
+				OR cust.name LIKE %(txt)s
 				OR cust.customer_name LIKE %(txt)s
 				OR IFNULL(cust.customer_group, '') LIKE %(txt)s
 			)
@@ -47,12 +57,66 @@ def customer_link_query(doctype, txt, searchfield, start, page_len, filters):
 		LIMIT %(start)s, %(page_len)s
 		""",
 		{
-			"txt": f"%{txt}%",
+			"txt": f"%{txt}%" if txt else "",
 			"exact": f"{txt}%",
 			"start": start,
-			"page_len": page_len,
+			"page_len": page_len or 20,
 		},
 	)
+
+
+@frappe.whitelist()
+def suggest_customers(txt: str | None = None, limit: int = 10, country: str | None = None):
+	"""Typeahead suggestions for customer pickers and lead company name."""
+	txt = (txt or "").strip()
+	limit = min(int(limit or 10), 50)
+	kwargs = {
+		"filters": {"disabled": 0},
+		"fields": ["name", "customer_name", "customer_group", "territory"],
+		"order_by": "customer_name asc",
+		"limit_page_length": limit,
+	}
+	if txt:
+		kwargs["or_filters"] = [
+			["customer_name", "like", f"%{txt}%"],
+			["name", "like", f"%{txt}%"],
+		]
+	rows = frappe.get_all("Customer", **kwargs)
+
+	# Optional country filter via address
+	if country in ("India", "Other") and rows:
+		filtered = []
+		for row in rows:
+			addr_country = frappe.db.get_value(
+				"Address",
+				{
+					"name": (
+						frappe.db.get_value(
+							"Dynamic Link",
+							{"link_doctype": "Customer", "link_name": row.name, "parenttype": "Address"},
+							"parent",
+						)
+						or ""
+					)
+				},
+				"country",
+			)
+			is_india = (not addr_country) or addr_country == "India"
+			if country == "India" and is_india:
+				filtered.append(row)
+			elif country == "Other" and addr_country and addr_country != "India":
+				filtered.append(row)
+		rows = filtered
+
+	return [
+		{
+			"value": r.name,
+			"label": r.customer_name or r.name,
+			"description": " · ".join([x for x in [r.customer_group, r.territory, r.name] if x]),
+			"customer_name": r.customer_name,
+		}
+		for r in rows
+	]
 
 
 @frappe.whitelist()
