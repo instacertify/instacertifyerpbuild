@@ -1,0 +1,44 @@
+{
+ "name": "IC Project Invoice Link",
+ "istable": 1,
+ "fields": [
+  {
+   "fieldname": "invoice",
+   "label": "Sales Invoice",
+   "fieldtype": "Link",
+   "options": "Sales Invoice",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quotation",
+   "label": "Quotation",
+   "fieldtype": "Link",
+   "options": "IC Quotation",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "amount",
+   "label": "Amount",
+   "fieldtype": "Currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  }
+ ],
+ "permissions": [],
+ "doctype": "DocType",
+ "module": "IC Projects",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

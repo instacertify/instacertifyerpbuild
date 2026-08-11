@@ -1,0 +1,148 @@
+{
+ "name": "IC Settings",
+ "issingle": 1,
+ "fields": [
+  {
+   "fieldname": "company_branding_section",
+   "label": "Company Branding",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "company_name",
+   "label": "Company Name",
+   "fieldtype": "Data",
+   "default": "InstaCertify"
+  },
+  {
+   "fieldname": "primary_color",
+   "label": "Primary Blue",
+   "fieldtype": "Color",
+   "default": "#0B5FFF"
+  },
+  {
+   "fieldname": "accent_color",
+   "label": "Accent Orange",
+   "fieldtype": "Color",
+   "default": "#FF7A00"
+  },
+  {
+   "fieldname": "column_break_49aeaa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "default_currency",
+   "label": "Default Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR"
+  },
+  {
+   "fieldname": "enable_multi_currency",
+   "label": "Enable Multi Currency",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "quotation_defaults_section",
+   "label": "Quotation Defaults",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "default_force_majeure",
+   "label": "Default Force Majeure",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "default_terms",
+   "label": "Default Terms and Conditions",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "quote_validity_days",
+   "label": "Quote Validity (Days)",
+   "fieldtype": "Int",
+   "default": 30
+  },
+  {
+   "fieldname": "notifications_section",
+   "label": "Notifications",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "notify_admin_on_quote_accept",
+   "label": "Notify Admin on Quote Accept",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "admin_notification_email",
+   "label": "Admin Notification Email",
+   "fieldtype": "Data",
+   "options": "Email"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Setup",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

@@ -1,0 +1,323 @@
+{
+ "name": "IC Test Request",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "title",
+ "search_fields": "customer,lab,sample_status",
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-TR-.YYYY.-.####",
+   "default": "IC-TR-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "label": "Title",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "request_type",
+   "label": "Type",
+   "fieldtype": "Select",
+   "options": "\nTesting\nTest Request Form",
+   "default": "Testing"
+  },
+  {
+   "fieldname": "sample_status",
+   "label": "Sample / Testing Status",
+   "fieldtype": "Select",
+   "options": "\nAwaiting Sample\nSample Received\nDispatched to Lab\nTesting In Process\nReport Available\nReport Uploaded\nShared with Customer",
+   "default": "Awaiting Sample",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "column_break_c1a927",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "project",
+   "label": "Project",
+   "fieldtype": "Link",
+   "options": "IC Project"
+  },
+  {
+   "fieldname": "quotation",
+   "label": "Quotation",
+   "fieldtype": "Link",
+   "options": "IC Quotation"
+  },
+  {
+   "fieldname": "sales_person",
+   "label": "Sales Person",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "test_details_section",
+   "label": "Test Details",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "test_name",
+   "label": "Test / Parameter",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "applicable_standard",
+   "label": "Applicable Standard",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "no_of_samples",
+   "label": "No. of Samples",
+   "fieldtype": "Int",
+   "default": 1
+  },
+  {
+   "fieldname": "testing_charges",
+   "label": "Testing Charges",
+   "fieldtype": "Currency",
+   "options": "currency"
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR"
+  },
+  {
+   "fieldname": "column_break_d33a88",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "lab",
+   "label": "Testing Lab",
+   "fieldtype": "Link",
+   "options": "IC Lab"
+  },
+  {
+   "fieldname": "accreditation",
+   "label": "Lab Accreditation",
+   "fieldtype": "Data",
+   "fetch_from": "lab.accreditation"
+  },
+  {
+   "fieldname": "testing_timeline",
+   "label": "Testing Timeline",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "expected_report_date",
+   "label": "Expected Report Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "sample_tracking_section",
+   "label": "Sample Tracking",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "sample_received_on",
+   "label": "Sample Received On",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "dispatched_to_lab_on",
+   "label": "Dispatched to Lab On",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "testing_started_on",
+   "label": "Testing Started On",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "report_available_on",
+   "label": "Report Available On",
+   "fieldtype": "Datetime"
+  },
+  {
+   "fieldname": "sample_qr_code",
+   "label": "Sample QR Code",
+   "fieldtype": "Attach Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "sample_tracking_code",
+   "label": "Sample Tracking Code",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "report_section",
+   "label": "Report",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "report_file",
+   "label": "Report File",
+   "fieldtype": "Attach"
+  },
+  {
+   "fieldname": "report_share_token",
+   "label": "Report Share Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "report_share_link",
+   "label": "Report Share Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "trf_share_link",
+   "label": "TRF Share Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "document_qr_section",
+   "label": "Document QR",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "unique_barcode",
+   "label": "Unique Barcode",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qr_code",
+   "label": "QR Code",
+   "fieldtype": "Attach Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "notes_section",
+   "label": "Notes",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "remarks",
+   "label": "Remarks",
+   "fieldtype": "Text"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Testing",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

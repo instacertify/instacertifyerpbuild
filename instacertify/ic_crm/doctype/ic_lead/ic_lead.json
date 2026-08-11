@@ -1,0 +1,290 @@
+{
+ "name": "IC Lead",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "company_name",
+ "search_fields": "contact_person,email,phone,lead_source,status",
+ "track_seen": 1,
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-LEAD-.YYYY.-.####",
+   "default": "IC-LEAD-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nOpen\nContacted\nQualified\nQuotation Sent\nWon\nLost\nNurture",
+   "default": "Open",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "contact_section",
+   "label": "Contact",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "contact_person",
+   "label": "Name of Person",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "company_name",
+   "label": "Company Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_8d2eb7",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "email",
+   "label": "Email Address",
+   "fieldtype": "Data",
+   "options": "Email",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone",
+   "label": "Contact Number",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "request_type_section",
+   "label": "Request Type",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "request_type",
+   "label": "Request Type",
+   "fieldtype": "Select",
+   "options": "\nService Request\nTesting Request\nBoth",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "service",
+   "label": "Service",
+   "fieldtype": "Link",
+   "options": "IC Service",
+   "depends_on": "eval:doc.request_type=='Service Request' || doc.request_type=='Both'"
+  },
+  {
+   "fieldname": "company_size",
+   "label": "Company Size",
+   "fieldtype": "Select",
+   "options": "\nMicro\nSmall\nMedium\nLarge",
+   "reqd": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "column_break_997573",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "country",
+   "label": "Country",
+   "fieldtype": "Select",
+   "options": "\nIndia\nOther",
+   "default": "India",
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "label": "State",
+   "fieldtype": "Select",
+   "options": "\nAndhra Pradesh\nArunachal Pradesh\nAssam\nBihar\nChhattisgarh\nGoa\nGujarat\nHaryana\nHimachal Pradesh\nJharkhand\nKarnataka\nKerala\nMadhya Pradesh\nMaharashtra\nManipur\nMeghalaya\nMizoram\nNagaland\nOdisha\nPunjab\nRajasthan\nSikkim\nTamil Nadu\nTelangana\nTripura\nUttar Pradesh\nUttarakhand\nWest Bengal\nAndaman and Nicobar Islands\nChandigarh\nDadra and Nagar Haveli and Daman and Diu\nDelhi\nJammu and Kashmir\nLadakh\nLakshadweep\nPuducherry",
+   "depends_on": "eval:doc.country=='India'"
+  },
+  {
+   "fieldname": "other_country",
+   "label": "Other Country",
+   "fieldtype": "Data",
+   "depends_on": "eval:doc.country=='Other'"
+  },
+  {
+   "fieldname": "lead_source_section",
+   "label": "Lead Source",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "lead_source",
+   "label": "Lead Source",
+   "fieldtype": "Select",
+   "options": "\nGoogle\nDirect Call\nLead Generated\nReferral by Existing Customer\nIndiaMART\nConsultant",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "consultant",
+   "label": "Consultant",
+   "fieldtype": "Link",
+   "options": "IC Consultant",
+   "depends_on": "eval:doc.lead_source=='Consultant'"
+  },
+  {
+   "fieldname": "expected_timeline",
+   "label": "Expected Timeline",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_71090e",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "assigned_to",
+   "label": "Assigned Sales Person",
+   "fieldtype": "Link",
+   "options": "User",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "customer",
+   "label": "Linked Customer",
+   "fieldtype": "Link",
+   "options": "Customer"
+  },
+  {
+   "fieldname": "optional_details_section",
+   "label": "Optional Details",
+   "fieldtype": "Section Break",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "address",
+   "label": "Address of Company",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "gstin",
+   "label": "GST Details",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "remarks",
+   "label": "Remarks",
+   "fieldtype": "Text"
+  },
+  {
+   "fieldname": "meta_section",
+   "label": "Meta",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "converted_on",
+   "label": "Converted On",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC CRM",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

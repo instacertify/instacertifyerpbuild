@@ -1,0 +1,388 @@
+{
+ "name": "IC Quotation",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "is_submittable": 1,
+ "title_field": "title",
+ "search_fields": "customer,service,status,sales_person",
+ "track_seen": 1,
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-QTN-.YYYY.-.####",
+   "default": "IC-QTN-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "label": "Title",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nDraft\nFinalised\nShared\nAccepted\nChanges Requested\nRejected\nProject Started",
+   "default": "Draft",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "column_break_eac8eb",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "quotation_template",
+   "label": "Quotation Template",
+   "fieldtype": "Link",
+   "options": "IC Quotation Template"
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR",
+   "reqd": 1
+  },
+  {
+   "fieldname": "conversion_rate",
+   "label": "Conversion Rate",
+   "fieldtype": "Float",
+   "default": 1
+  },
+  {
+   "fieldname": "customer_&_service_section",
+   "label": "Customer & Service",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "lead",
+   "label": "Lead",
+   "fieldtype": "Link",
+   "options": "IC Lead"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer_name",
+   "label": "Customer Name",
+   "fieldtype": "Data",
+   "fetch_from": "customer.customer_name",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_2d7484",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "service",
+   "label": "Service",
+   "fieldtype": "Link",
+   "options": "IC Service",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "category",
+   "label": "Category",
+   "fieldtype": "Select",
+   "options": "\nCertification\nTesting\nConsulting\nRenewal\nAudit\nTraining\nOther",
+   "reqd": 1
+  },
+  {
+   "fieldname": "is_renewal",
+   "label": "Is Renewal / Certificate Edit",
+   "fieldtype": "Check"
+  },
+  {
+   "fieldname": "sales_person",
+   "label": "Sales Person",
+   "fieldtype": "Link",
+   "options": "User",
+   "default": "__user",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "scope_&_timeline_section",
+   "label": "Scope & Timeline",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "scope_of_work",
+   "label": "Scope of Work / Service Details",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "certification_timeline",
+   "label": "Certification Timeline",
+   "fieldtype": "Text"
+  },
+  {
+   "fieldname": "costing_section",
+   "label": "Costing",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "cost_lines",
+   "label": "Cost Lines",
+   "fieldtype": "Table",
+   "options": "IC Quotation Cost Line"
+  },
+  {
+   "fieldname": "totals_section",
+   "label": "Totals",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "consulting_total",
+   "label": "Consulting Total (Revenue)",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "lab_testing_total",
+   "label": "Lab / Testing Total (Revenue)",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_7b2aaa",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "government_fees_total",
+   "label": "Government Fees",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "other_charges_total",
+   "label": "Other Charges",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "our_revenue_total",
+   "label": "Our Revenue Total",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1
+  },
+  {
+   "fieldname": "grand_total",
+   "label": "Grand Total",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "read_only": 1,
+   "bold": 1
+  },
+  {
+   "fieldname": "testing_requirements_section",
+   "label": "Testing Requirements",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "testing_lines",
+   "label": "Testing Lines",
+   "fieldtype": "Table",
+   "options": "IC Quotation Testing Line"
+  },
+  {
+   "fieldname": "legal_section",
+   "label": "Legal",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "force_majeure",
+   "label": "Force Majeure",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "terms_and_conditions",
+   "label": "Terms and Conditions",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "sharing_&_qr_section",
+   "label": "Sharing & QR",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "unique_barcode",
+   "label": "Unique Quote Barcode",
+   "fieldtype": "Data",
+   "read_only": 1
+  },
+  {
+   "fieldname": "qr_code",
+   "label": "QR Code",
+   "fieldtype": "Attach Image",
+   "read_only": 1
+  },
+  {
+   "fieldname": "share_token",
+   "label": "Share Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "share_link",
+   "label": "Customer Share Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "shared_on",
+   "label": "Shared On",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_response_on",
+   "label": "Customer Response On",
+   "fieldtype": "Datetime",
+   "read_only": 1
+  },
+  {
+   "fieldname": "customer_remarks",
+   "label": "Customer Change Remarks",
+   "fieldtype": "Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "links_section",
+   "label": "Links",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "project",
+   "label": "Project",
+   "fieldtype": "Link",
+   "options": "IC Project",
+   "read_only": 1
+  },
+  {
+   "fieldname": "valid_till",
+   "label": "Valid Till",
+   "fieldtype": "Date"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 1,
+   "amend": 1,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 1,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Quotation",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

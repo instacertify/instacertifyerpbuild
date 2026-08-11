@@ -1,0 +1,134 @@
+:root {
+	--ic-blue: #0b5fff;
+	--ic-orange: #ff7a00;
+	--ic-ink: #1a2332;
+}
+
+body.ic-portal {
+	margin: 0;
+	font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+	color: var(--ic-ink);
+	background:
+		radial-gradient(900px 320px at 0% 0%, rgba(11, 95, 255, 0.12), transparent 55%),
+		radial-gradient(800px 280px at 100% 0%, rgba(255, 122, 0, 0.14), transparent 50%),
+		#f4f7fb;
+}
+
+.ic-portal-shell {
+	max-width: 920px;
+	margin: 0 auto;
+	padding: 28px 18px 48px;
+}
+
+.ic-portal-brand {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 18px;
+}
+
+.ic-portal-brand .logo {
+	font-weight: 800;
+	font-size: 1.35rem;
+	background: linear-gradient(90deg, var(--ic-blue), var(--ic-orange));
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+}
+
+.ic-portal-card {
+	background: #fff;
+	border-radius: 16px;
+	padding: 24px;
+	box-shadow: 0 12px 36px rgba(26, 35, 50, 0.08);
+}
+
+.ic-portal-card h1 {
+	margin-top: 0;
+	font-size: 1.5rem;
+}
+
+.ic-meta {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 10px;
+	margin: 16px 0;
+}
+
+.ic-meta div {
+	background: #f7f9fc;
+	border-radius: 10px;
+	padding: 10px 12px;
+}
+
+.ic-meta label {
+	display: block;
+	font-size: 0.75rem;
+	color: #667;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+.ic-table {
+	width: 100%;
+	border-collapse: collapse;
+	margin: 16px 0;
+}
+
+.ic-table th,
+.ic-table td {
+	border-bottom: 1px solid #e6ebf2;
+	padding: 10px 8px;
+	text-align: left;
+	font-size: 0.92rem;
+}
+
+.ic-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 18px;
+}
+
+.ic-btn {
+	border: 0;
+	border-radius: 10px;
+	padding: 11px 18px;
+	font-weight: 700;
+	cursor: pointer;
+}
+
+.ic-btn-accept {
+	background: linear-gradient(135deg, #0b5fff, #0847c7);
+	color: #fff;
+}
+
+.ic-btn-change {
+	background: #ffe8d1;
+	color: #b35400;
+}
+
+.ic-btn-reject {
+	background: #f1f3f6;
+	color: #444;
+}
+
+textarea.ic-remarks {
+	width: 100%;
+	min-height: 90px;
+	border-radius: 10px;
+	border: 1px solid #d5dde8;
+	padding: 10px;
+	margin-top: 10px;
+}
+
+.ic-qr {
+	max-width: 120px;
+	margin-top: 12px;
+}
+
+@media (max-width: 640px) {
+	.ic-portal-card {
+		padding: 16px;
+	}
+}

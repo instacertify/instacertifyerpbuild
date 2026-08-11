@@ -1,0 +1,78 @@
+{% extends "templates/web.html" %}
+{% block title %}Upload Documents — InstaCertify{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal">
+	<div class="ic-portal-shell">
+		<div class="ic-portal-brand"><div class="logo">InstaCertify</div><div>Document Checklist</div></div>
+		<div class="ic-portal-card">
+			<div id="ic-loading">Loading checklist…</div>
+			<div id="ic-content" style="display:none;">
+				<h1 id="d-title"></h1>
+				<p>Please upload files as per the checklist. PDF / JPG / PNG accepted.</p>
+				<table class="ic-table" id="d-items"><thead><tr><th>Document</th><th>Mandatory</th><th>Instructions</th><th>Status</th><th>Upload</th></tr></thead><tbody></tbody></table>
+			</div>
+			<div id="ic-error" style="display:none;color:#b00020;"></div>
+		</div>
+	</div>
+</div>
+<script>
+const token = {{ token|tojson }};
+frappe.ready(() => {
+	frappe.call({
+		method: 'instacertify.api.documents.get_document_request',
+		args: { token },
+		callback(r) {
+			const d = r.message;
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-content').style.display='block';
+			document.getElementById('d-title').textContent = d.title;
+			const tb = document.querySelector('#d-items tbody');
+			(d.items||[]).forEach(item => {
+				const tr = document.createElement('tr');
+				tr.innerHTML = `<td>${frappe.utils.escape_html(item.document_name)}</td>
+					<td>${item.is_mandatory ? 'Yes' : 'No'}</td>
+					<td>${frappe.utils.escape_html(item.instructions||'')}</td>
+					<td class="st">${frappe.utils.escape_html(item.status)}</td>
+					<td class="up"></td>`;
+				const cell = tr.querySelector('.up');
+				if (item.uploaded_file) {
+					cell.innerHTML = `<a href="${item.uploaded_file}" target="_blank">View</a>`;
+				} else {
+					const input = document.createElement('input');
+					input.type = 'file';
+					input.accept = '.pdf,.png,.jpg,.jpeg,application/pdf,image/*';
+					input.onchange = async () => {
+						if (!input.files.length) return;
+						const file = input.files[0];
+						const fd = new FormData();
+						fd.append('file', file, file.name);
+						fd.append('is_private', 0);
+						fd.append('folder', 'Home/IC Customer Uploads');
+						const res = await fetch('/api/method/upload_file', { method: 'POST', body: fd, headers: { 'X-Frappe-CSRF-Token': frappe.csrf_token }});
+						const json = await res.json();
+						const file_url = json.message && json.message.file_url;
+						if (!file_url) { frappe.msgprint('Upload failed'); return; }
+						frappe.call({
+							method: 'instacertify.api.documents.upload_checklist_file',
+							args: { token, idx: item.idx, file_url },
+							callback() {
+								tr.querySelector('.st').textContent = 'Uploaded';
+								cell.innerHTML = `<a href="${file_url}" target="_blank">View</a>`;
+							}
+						});
+					};
+					cell.appendChild(input);
+				}
+				tb.appendChild(tr);
+			});
+		},
+		error() {
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-error').style.display='block';
+			document.getElementById('ic-error').textContent='Invalid document link.';
+		}
+	});
+});
+</script>
+{% endblock %}

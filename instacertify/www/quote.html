@@ -1,0 +1,118 @@
+{% extends "templates/web.html" %}
+
+{% block title %}InstaCertify Quotation{% endblock %}
+
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal body ic-portal" id="ic-quote-app">
+	<div class="ic-portal-shell">
+		<div class="ic-portal-brand">
+			<div class="logo">InstaCertify</div>
+			<div style="color:#5b677a;font-size:0.9rem;">Customer Quotation</div>
+		</div>
+		<div class="ic-portal-card">
+			<div id="ic-loading">Loading quotation…</div>
+			<div id="ic-content" style="display:none;">
+				<h1 id="q-title"></h1>
+				<div class="ic-meta">
+					<div><label>Quote No</label><span id="q-name"></span></div>
+					<div><label>Customer</label><span id="q-customer"></span></div>
+					<div><label>Service</label><span id="q-service"></span></div>
+					<div><label>Status</label><span id="q-status"></span></div>
+					<div><label>Currency</label><span id="q-currency"></span></div>
+					<div><label>Grand Total</label><strong id="q-total"></strong></div>
+				</div>
+				<h3>Scope of Work</h3>
+				<div id="q-scope"></div>
+				<h3>Certification Timeline</h3>
+				<div id="q-timeline"></div>
+				<h3>Cost Breakdown</h3>
+				<table class="ic-table" id="q-costs"><thead><tr><th>Type</th><th>Description</th><th>Qty</th><th>Rate</th><th>Amount</th><th>Payable To</th></tr></thead><tbody></tbody></table>
+				<h3>Testing Details</h3>
+				<table class="ic-table" id="q-tests"><thead><tr><th>Test</th><th>Standard</th><th>Samples</th><th>Charges</th><th>Lab</th><th>Accreditation</th><th>Timeline</th></tr></thead><tbody></tbody></table>
+				<h3>Force Majeure</h3>
+				<div id="q-fm"></div>
+				<h3>Terms &amp; Conditions</h3>
+				<div id="q-terms"></div>
+				<img id="q-qr" class="ic-qr" alt="Quote QR" style="display:none;"/>
+				<p style="font-size:12px;color:#667;">Barcode: <span id="q-barcode"></span></p>
+				<div id="q-actions">
+					<label>Remarks (required if requesting changes)</label>
+					<textarea class="ic-remarks" id="q-remarks" placeholder="Describe changes required…"></textarea>
+					<div class="ic-actions">
+						<button class="ic-btn ic-btn-accept" onclick="respond('accept')">Accept Quote</button>
+						<button class="ic-btn ic-btn-change" onclick="respond('request_changes')">Request Changes</button>
+						<button class="ic-btn ic-btn-reject" onclick="respond('reject')">Reject</button>
+					</div>
+				</div>
+				<div id="q-done" style="display:none;margin-top:16px;font-weight:700;"></div>
+			</div>
+			<div id="ic-error" style="display:none;color:#b00020;"></div>
+		</div>
+	</div>
+</div>
+<script>
+const token = {{ token|tojson }};
+function money(v, c) { return (v == null ? 0 : Number(v)).toLocaleString(undefined, {maximumFractionDigits:2}) + ' ' + (c||'INR'); }
+frappe.ready(() => {
+	frappe.call({
+		method: 'instacertify.api.quotation.get_public_quote',
+		args: { token },
+		callback(r) {
+			const d = r.message;
+			if (!d) return;
+			document.getElementById('ic-loading').style.display = 'none';
+			document.getElementById('ic-content').style.display = 'block';
+			document.getElementById('q-title').textContent = d.title;
+			document.getElementById('q-name').textContent = d.name;
+			document.getElementById('q-customer').textContent = d.customer_name;
+			document.getElementById('q-service').textContent = d.service + (d.category ? ' ('+d.category+')' : '');
+			document.getElementById('q-status').textContent = d.status;
+			document.getElementById('q-currency').textContent = d.currency;
+			document.getElementById('q-total').textContent = money(d.grand_total, d.currency);
+			document.getElementById('q-scope').innerHTML = d.scope_of_work || '—';
+			document.getElementById('q-timeline').innerHTML = d.certification_timeline || '—';
+			document.getElementById('q-fm').innerHTML = d.force_majeure || '—';
+			document.getElementById('q-terms').innerHTML = d.terms_and_conditions || '—';
+			document.getElementById('q-barcode').textContent = d.unique_barcode || '';
+			if (d.qr_code) {
+				const img = document.getElementById('q-qr');
+				img.src = d.qr_code; img.style.display = 'block';
+			}
+			const tb = document.querySelector('#q-costs tbody');
+			(d.cost_lines||[]).forEach(row => {
+				tb.insertAdjacentHTML('beforeend', `<tr><td>${row.cost_type||''}</td><td>${row.description||''}</td><td>${row.qty||0}</td><td>${row.rate||0}</td><td>${row.amount||0}</td><td>${row.payable_to||''}</td></tr>`);
+			});
+			const tt = document.querySelector('#q-tests tbody');
+			(d.testing_lines||[]).forEach(row => {
+				tt.insertAdjacentHTML('beforeend', `<tr><td>${row.test_name||''}</td><td>${row.applicable_standard||''}</td><td>${row.no_of_samples||''}</td><td>${row.testing_charges||''}</td><td>${row.lab||''}</td><td>${row.accreditation||''}</td><td>${row.testing_timeline||''}</td></tr>`);
+			});
+			if (['Accepted','Rejected','Project Started'].includes(d.status)) {
+				document.getElementById('q-actions').style.display = 'none';
+				document.getElementById('q-done').style.display = 'block';
+				document.getElementById('q-done').textContent = 'This quotation is already marked: ' + d.status;
+			}
+		},
+		error() {
+			document.getElementById('ic-loading').style.display = 'none';
+			document.getElementById('ic-error').style.display = 'block';
+			document.getElementById('ic-error').textContent = 'Invalid or expired quotation link.';
+		}
+	});
+});
+function respond(action) {
+	const remarks = document.getElementById('q-remarks').value;
+	frappe.call({
+		method: 'instacertify.api.quotation.respond_to_quote',
+		args: { token, action, remarks },
+		freeze: true,
+		callback(r) {
+			document.getElementById('q-actions').style.display = 'none';
+			document.getElementById('q-done').style.display = 'block';
+			document.getElementById('q-done').textContent = 'Thank you. Status: ' + (r.message && r.message.status);
+			document.getElementById('q-status').textContent = r.message.status;
+		}
+	});
+}
+</script>
+{% endblock %}

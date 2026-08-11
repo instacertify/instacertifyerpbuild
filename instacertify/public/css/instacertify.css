@@ -1,0 +1,175 @@
+:root {
+	--ic-blue: #0b5fff;
+	--ic-blue-dark: #0847c7;
+	--ic-orange: #ff7a00;
+	--ic-orange-soft: #ffe8d1;
+	--ic-blue-soft: #e8f0ff;
+	--ic-ink: #1a2332;
+	--ic-muted: #5b677a;
+	--ic-surface: #f5f8fc;
+}
+
+/* Soft brand atmosphere on desk — not flat white */
+.desk-sidebar,
+body[data-route-history] .layout-main-section {
+	background:
+		radial-gradient(1200px 400px at 0% 0%, rgba(11, 95, 255, 0.08), transparent 55%),
+		radial-gradient(900px 360px at 100% 0%, rgba(255, 122, 0, 0.10), transparent 50%),
+		var(--ic-surface);
+}
+
+.navbar {
+	border-bottom: 3px solid var(--ic-orange) !important;
+}
+
+.btn-primary,
+.primary-action {
+	background: linear-gradient(135deg, var(--ic-blue), var(--ic-blue-dark)) !important;
+	border-color: var(--ic-blue-dark) !important;
+}
+
+.indicator-pill.blue,
+.indicator.blue {
+	background: var(--ic-blue-soft) !important;
+	color: var(--ic-blue-dark) !important;
+}
+
+.indicator-pill.orange,
+.indicator.orange {
+	background: var(--ic-orange-soft) !important;
+	color: #b35400 !important;
+}
+
+.ic-dash-wrap {
+	padding: 8px 4px 24px;
+}
+
+.ic-dash-hero {
+	background:
+		linear-gradient(120deg, rgba(11, 95, 255, 0.95), rgba(8, 71, 199, 0.92) 55%, rgba(255, 122, 0, 0.88));
+	color: #fff;
+	border-radius: 18px;
+	padding: 28px 32px;
+	margin-bottom: 20px;
+	box-shadow: 0 16px 40px rgba(11, 95, 255, 0.22);
+	position: relative;
+	overflow: hidden;
+}
+
+.ic-dash-hero::after {
+	content: "";
+	position: absolute;
+	right: -40px;
+	top: -40px;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.12);
+}
+
+.ic-dash-hero h1 {
+	margin: 0 0 6px;
+	font-size: 1.75rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.ic-dash-hero p {
+	margin: 0;
+	opacity: 0.92;
+}
+
+.ic-card-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+	gap: 14px;
+	margin-bottom: 22px;
+}
+
+.ic-stat-card {
+	background: #fff;
+	border-radius: 14px;
+	padding: 16px 18px;
+	border: 1px solid rgba(11, 95, 255, 0.08);
+	box-shadow: 0 8px 24px rgba(26, 35, 50, 0.06);
+	cursor: pointer;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+	border-top: 4px solid var(--ic-blue);
+}
+
+.ic-stat-card:hover {
+	transform: translateY(-3px);
+	box-shadow: 0 14px 28px rgba(26, 35, 50, 0.1);
+}
+
+.ic-stat-card .label {
+	color: var(--ic-muted);
+	font-size: 0.85rem;
+	font-weight: 600;
+}
+
+.ic-stat-card .value {
+	font-size: 1.8rem;
+	font-weight: 800;
+	color: var(--ic-ink);
+	margin-top: 4px;
+}
+
+.ic-task-panel {
+	background: #fff;
+	border-radius: 14px;
+	padding: 18px 20px;
+	border: 1px solid rgba(255, 122, 0, 0.12);
+}
+
+.ic-task-panel h3 {
+	margin: 0 0 12px;
+	color: var(--ic-ink);
+	font-size: 1.1rem;
+}
+
+.ic-task-row {
+	display: flex;
+	justify-content: space-between;
+	gap: 12px;
+	padding: 12px 0;
+	border-bottom: 1px dashed rgba(91, 103, 122, 0.25);
+	cursor: pointer;
+}
+
+.ic-task-row:last-child {
+	border-bottom: 0;
+}
+
+.ic-task-type {
+	display: inline-block;
+	font-size: 0.7rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+	padding: 2px 8px;
+	border-radius: 999px;
+	background: var(--ic-blue-soft);
+	color: var(--ic-blue-dark);
+	margin-bottom: 4px;
+}
+
+.ic-flow-diagram {
+	margin-top: 22px;
+	background: #fff;
+	border-radius: 14px;
+	padding: 18px;
+	overflow-x: auto;
+}
+
+.ic-flow-diagram svg {
+	width: 100%;
+	min-width: 720px;
+	height: auto;
+}
+
+/* Workspace shortcut tint */
+.workspace-shortcut-widget .icon-link,
+.shortcut-widget-box {
+	border-radius: 12px !important;
+}

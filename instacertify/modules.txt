@@ -1,0 +1,7 @@
+IC CRM
+IC Quotation
+IC Projects
+IC Testing
+IC Assets
+IC HR Portal
+IC Setup

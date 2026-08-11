@@ -1,0 +1,18 @@
+# Optional local stack helper.
+# Prefer the official frappe_docker images for ERPNext v16, then install this app.
+#
+# Quick path (recommended):
+#   1. Follow https://github.com/frappe/frappe_docker for ERPNext v16
+#   2. Copy / mount this repo into the bench apps folder as `instacertify`
+#   3. bench get-app /path/to/instacertifyerpbuild  (or git clone into apps/)
+#   4. bench --site <site> install-app instacertify
+#   5. bench --site <site> migrate
+#
+# This compose file is a convenience stub for developers who already have
+# a published ERPNext image; adjust image tags to your registry.
+
+services:
+  configurator:
+    image: frappe/erpnext:v16.0.0
+    profiles: ["manual"]
+    command: ["echo", "Use frappe_docker; see README.md for install-app steps"]
