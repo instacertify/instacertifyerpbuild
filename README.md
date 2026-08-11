@@ -29,14 +29,19 @@ Use the latest ERPNext from GitHub:
 cd frappe-bench
 bench get-app --branch version-16 https://github.com/frappe/erpnext.git
 bench get-app --branch version-16 https://github.com/frappe/hrms.git   # optional but recommended
+bench get-app --branch version-16 https://github.com/resilient-tech/india-compliance.git  # GST fetch
 bench get-app https://github.com/instacertify/instacertifyerpbuild.git
 bench --site <your-site> install-app erpnext
 bench --site <your-site> install-app hrms
+bench --site <your-site> install-app india_compliance
 bench --site <your-site> install-app instacertify
 bench --site <your-site> migrate
 bench build --app instacertify
 bench --site <your-site> clear-cache
 ```
+
+Configure GST APIs via **IC Settings → India Compliance · GST Setup**  
+(docs: https://docs.indiacompliance.app/docs/configuration/gst_setup).
 
 ### Load demo data (ABC Electronics portal + invoices)
 
@@ -97,6 +102,7 @@ bench pip install qrcode Pillow
 - [Architecture & flow diagram](docs/ARCHITECTURE.md)
 - [Roles & permissions](docs/ROLES_AND_PERMISSIONS.md)
 - [Customer portal & Zoho-style invoicing](docs/CUSTOMER_PORTAL_AND_INVOICING.md)
+- [India Compliance GST setup](docs/INDIA_COMPLIANCE_GST_SETUP.md)
 
 ## Brand
 

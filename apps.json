@@ -8,6 +8,10 @@
     "branch": "version-16"
   },
   {
+    "url": "https://github.com/resilient-tech/india-compliance",
+    "branch": "version-16"
+  },
+  {
     "url": "https://github.com/instacertify/instacertifyerpbuild",
     "branch": "cursor/instacertify-erpnext-app-2159"
   }

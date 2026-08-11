@@ -8,7 +8,10 @@ app_version = "1.0.0"
 
 # InstaCertify brand colors injected into Desk
 app_include_css = ["/assets/instacertify/css/instacertify.css"]
-app_include_js = ["/assets/instacertify/js/instacertify_desk.js"]
+app_include_js = [
+	"/assets/instacertify/js/instacertify_desk.js",
+	"/assets/instacertify/js/gst_fetch.js",
+]
 
 web_include_css = ["/assets/instacertify/css/instacertify_web.css"]
 

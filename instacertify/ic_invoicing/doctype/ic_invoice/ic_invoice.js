@@ -1,5 +1,8 @@
 frappe.ui.form.on('IC Invoice', {
 	refresh(frm) {
+		if (frm.doc.billing_country === 'India' && typeof instacertify !== 'undefined' && instacertify.gst) {
+			instacertify.gst.add_fetch_button(frm, 'customer_gstin');
+		}
 		if (frm.doc.docstatus === 1 && ['Approved','Sent','Partially Paid'].includes(frm.doc.status)) {
 			frm.add_custom_button(__('Send Payment Link'), () => {
 				frappe.call({
@@ -50,6 +53,15 @@ frappe.ui.form.on('IC Invoice', {
 				Object.entries(r.message).forEach(([k, v]) => frm.set_value(k, v));
 			}
 		});
+	},
+	customer_gstin(frm) {
+		if (frm.doc.billing_country === 'India' && frm.doc.customer_gstin && frm.doc.customer_gstin.length === 15) {
+			frappe.db.get_single_value('IC Settings', 'auto_fetch_gstin_on_invoice').then((enabled) => {
+				if (enabled && typeof instacertify !== 'undefined' && instacertify.gst) {
+					instacertify.gst.fetch_and_apply(frm, 'customer_gstin');
+				}
+			});
+		}
 	}
 });
 

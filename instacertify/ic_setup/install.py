@@ -148,6 +148,7 @@ def _create_workspace():
 		{"type": "shortcut", "data": {"shortcut_name": "Holiday Calendar", "col": 4}},
 		{"type": "shortcut", "data": {"shortcut_name": "Salary Slips", "col": 4}},
 		{"type": "shortcut", "data": {"shortcut_name": "Invoices", "col": 4}},
+		{"type": "shortcut", "data": {"shortcut_name": "IC Settings", "col": 4}},
 	]
 
 	shortcuts = [
@@ -162,6 +163,7 @@ def _create_workspace():
 		{"label": "Holiday Calendar", "link_type": "DocType", "link_to": "Holiday List", "color": "Orange"},
 		{"label": "Salary Slips", "link_type": "DocType", "link_to": "Salary Slip", "color": "Green"},
 		{"label": "Invoices", "link_type": "DocType", "link_to": "IC Invoice", "color": "Purple"},
+		{"label": "IC Settings", "link_type": "DocType", "link_to": "IC Settings", "color": "Blue"},
 	]
 
 	name = "InstaCertify"
