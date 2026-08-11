@@ -2,6 +2,13 @@
 
 Built for **ERPNext version-16** (`https://github.com/frappe/erpnext.git` branch `version-16`).
 
+## Quotation currency rule
+
+- **India** customers → quote currency is always **INR**
+- **Outside India** customers → quote currency is always **USD**
+
+Set via `Customer Country` on **IC Quotation** (auto from Lead / Customer address). Currency field is read-only.
+
 ## Customer project portal
 
 Shareable link from **IC Project → Customer → Share Customer Portal**:

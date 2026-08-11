@@ -7,14 +7,22 @@ from frappe.model.document import Document
 
 class ICQuotation(Document):
 	def validate(self):
+		self.apply_country_currency()
 		self.calculate_totals()
 		self.set_qr_payload()
 		self._set_defaults_from_settings()
+
+	def apply_country_currency(self):
+		"""India → INR, Outside India → USD (always)."""
+		from instacertify.utils.currency import apply_quote_currency
+
+		apply_quote_currency(self)
 
 	def calculate_totals(self):
 		consulting = lab = govt = other = revenue = 0
 		for row in self.cost_lines or []:
 			row.amount = (row.qty or 0) * (row.rate or 0)
+			row.currency = self.currency
 			if row.cost_type == "Consulting":
 				consulting += row.amount
 				row.counts_as_revenue = 1
@@ -27,6 +35,8 @@ class ICQuotation(Document):
 				other += row.amount
 			if row.counts_as_revenue:
 				revenue += row.amount
+		for row in self.testing_lines or []:
+			row.currency = self.currency
 		self.consulting_total = consulting
 		self.lab_testing_total = lab
 		self.government_fees_total = govt
@@ -40,8 +50,6 @@ class ICQuotation(Document):
 		ensure_document_qr(self, "quotation")
 
 	def _set_defaults_from_settings(self):
-		if self.force_majeure and self.terms_and_conditions:
-			return
 		try:
 			settings = frappe.get_single("IC Settings")
 		except Exception:
@@ -52,8 +60,7 @@ class ICQuotation(Document):
 			self.terms_and_conditions = settings.default_terms
 		if not self.valid_till and settings.quote_validity_days:
 			self.valid_till = frappe.utils.add_days(frappe.utils.today(), settings.quote_validity_days)
-		if not self.currency:
-			self.currency = settings.default_currency or "INR"
+		# Currency is always driven by customer country — never override from settings
 
 	def on_submit(self):
 		if self.status in (None, "", "Draft"):
