@@ -1,0 +1,63 @@
+{% extends "templates/web.html" %}
+{% block title %}Pay Invoice — InstaCertify{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal"><div class="ic-portal-shell">
+<div class="ic-portal-brand"><div class="logo">InstaCertify</div><div>Invoice Payment</div></div>
+<div class="ic-portal-card">
+  <div id="loading">Loading invoice…</div>
+  <div id="content" style="display:none">
+    <h1 id="title"></h1>
+    <div class="ic-meta">
+      <div><label>Invoice</label><span id="name"></span></div>
+      <div><label>Customer</label><span id="customer"></span></div>
+      <div><label>Currency</label><span id="currency"></span></div>
+      <div><label>Tax</label><span id="tax"></span></div>
+      <div><label>Grand Total</label><strong id="total"></strong></div>
+      <div><label>Balance Due</label><strong id="balance"></strong></div>
+    </div>
+    <table class="ic-table" id="items"><thead><tr><th>Description</th><th>HSN/SAC</th><th>Qty</th><th>Rate</th><th>Amount</th></tr></thead><tbody></tbody></table>
+    <div class="ic-actions">
+      <input id="amount" type="number" min="0" step="0.01" placeholder="Payment amount" style="padding:10px;border-radius:10px;border:1px solid #d5dde8" />
+      <input id="ref" type="text" placeholder="Reference (optional)" style="padding:10px;border-radius:10px;border:1px solid #d5dde8" />
+      <button class="ic-btn ic-btn-accept" onclick="pay()">Pay / Record Payment</button>
+    </div>
+    <h3>Payments</h3>
+    <div id="payments"></div>
+  </div>
+  <div id="error" style="display:none;color:#b00020"></div>
+</div></div></div>
+<script>
+const token={{ token|tojson }};
+function render(d){
+  document.getElementById('loading').style.display='none';
+  document.getElementById('content').style.display='block';
+  document.getElementById('title').textContent=d.title;
+  document.getElementById('name').textContent=d.name;
+  document.getElementById('customer').textContent=d.customer_name;
+  document.getElementById('currency').textContent=d.currency;
+  document.getElementById('tax').textContent=d.tax_type||'—';
+  document.getElementById('total').textContent=`${d.grand_total} ${d.currency}`;
+  document.getElementById('balance').textContent=`${d.balance_due} ${d.currency}`;
+  document.getElementById('amount').value=d.balance_due;
+  const tb=document.querySelector('#items tbody'); tb.innerHTML='';
+  (d.items||[]).forEach(r=>tb.insertAdjacentHTML('beforeend',`<tr><td>${r.item_description||''}</td><td>${r.hsn_sac||''}</td><td>${r.qty||0}</td><td>${r.rate||0}</td><td>${r.amount||0}</td></tr>`));
+  document.getElementById('payments').innerHTML=(d.payments||[]).map(p=>`<div>${p.payment_date}: ${p.amount} ${d.currency} via ${p.mode} (${p.reference||''})</div>`).join('')||'No payments yet';
+}
+frappe.ready(()=>{
+  frappe.call({method:'instacertify.api.invoice.get_payment_invoice', args:{token}, callback(r){render(r.message)}, error(){
+    document.getElementById('loading').style.display='none';
+    document.getElementById('error').style.display='block';
+    document.getElementById('error').textContent='Invalid payment link.';
+  }});
+});
+function pay(){
+  frappe.call({
+    method:'instacertify.api.invoice.record_portal_payment',
+    args:{token, amount: document.getElementById('amount').value, reference: document.getElementById('ref').value},
+    freeze:true,
+    callback(r){ render(r.message); frappe.msgprint('Payment recorded'); }
+  });
+}
+</script>
+{% endblock %}

@@ -176,6 +176,64 @@
    "collapsible": 0
   },
   {
+   "fieldname": "customer_manager",
+   "label": "Customer Manager",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "portal_section",
+   "label": "Customer Portal",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "portal_token",
+   "label": "Portal Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "customer_portal_link",
+   "label": "Customer Project Portal Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "certification_name",
+   "label": "Certification / Service Label",
+   "fieldtype": "Data",
+   "description": "Shown on customer portal e.g. BIS CRS Certification"
+  },
+  {
+   "fieldname": "show_credentials_when_complete",
+   "label": "Show Login Credentials When Complete",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "messages_section",
+   "label": "Customer Messages",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "messages",
+   "label": "Messages",
+   "fieldtype": "Table",
+   "options": "IC Project Message"
+  },
+  {
+   "fieldname": "reports_section",
+   "label": "Customer Reports",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "reports",
+   "label": "Reports",
+   "fieldtype": "Table",
+   "options": "IC Project Report"
+  },
+  {
    "fieldname": "notes",
    "label": "Notes",
    "fieldtype": "Text Editor"
@@ -261,6 +319,18 @@
    "print": 1,
    "email": 1,
    "share": 1
+  },
+  {
+   "role": "IC Customer Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "report": 1,
+   "print": 1,
+   "email": 1,
+   "share": 1,
+   "export": 0
   }
  ],
  "doctype": "DocType",

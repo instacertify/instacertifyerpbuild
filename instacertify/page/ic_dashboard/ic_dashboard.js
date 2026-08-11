@@ -16,6 +16,14 @@ frappe.pages["ic-dashboard"].on_page_load = function (wrapper) {
 				<h3>${__("Pending tasks & progress")}</h3>
 				<div id="ic-tasks"></div>
 			</div>
+			<div class="ic-task-panel" style="margin-top:16px;">
+				<h3>${__("Project progress by person")}</h3>
+				<div id="ic-person-chart"></div>
+			</div>
+			<div class="ic-task-panel" style="margin-top:16px;">
+				<h3>${__("Project progress bars")}</h3>
+				<div id="ic-project-progress"></div>
+			</div>
 			<div class="ic-flow-diagram">
 				<h3 style="margin:0 0 10px;">${__("End-to-end flow")}</h3>
 				<svg viewBox="0 0 960 160" xmlns="http://www.w3.org/2000/svg" aria-label="InstaCertify process flow">
@@ -24,6 +32,9 @@ frappe.pages["ic-dashboard"].on_page_load = function (wrapper) {
 							<stop offset="0%" stop-color="#0B5FFF"/>
 							<stop offset="100%" stop-color="#FF7A00"/>
 						</linearGradient>
+						<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+							<path d="M0,0 L6,3 L0,6 Z" fill="#FF7A00"/>
+						</marker>
 					</defs>
 					${["Lead CRM", "Quote + Template", "Customer Accept", "Project", "Docs / TRF", "Lab & Sample", "Report / Invoice"]
 						.map((label, i) => {
@@ -35,13 +46,8 @@ frappe.pages["ic-dashboard"].on_page_load = function (wrapper) {
 						`;
 						})
 						.join("")}
-					<defs>
-						<marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
-							<path d="M0,0 L6,3 L0,6 Z" fill="#FF7A00"/>
-						</marker>
-					</defs>
 					<text x="480" y="140" text-anchor="middle" fill="#5b677a" font-size="12" font-family="Segoe UI, sans-serif">
-						Revenue counted from Consulting + Lab charges · Govt fees tracked separately
+						Revenue from Consulting + Lab · Zoho-style invoicing · Customer project portal
 					</text>
 				</svg>
 			</div>
@@ -68,6 +74,7 @@ frappe.pages["ic-dashboard"].on_page_load = function (wrapper) {
 				});
 				$cards.append($card);
 			});
+
 			const $tasks = $("#ic-tasks").empty();
 			if (!(data.tasks || []).length) {
 				$tasks.append(`<div style="color:#5b677a">${__("You're all caught up.")}</div>`);
@@ -89,6 +96,53 @@ frappe.pages["ic-dashboard"].on_page_load = function (wrapper) {
 				});
 				$tasks.append($row);
 			});
+
+			const $people = $("#ic-person-chart").empty();
+			const people = data.person_chart || [];
+			if (!people.length) {
+				$people.append(`<div style="color:#5b677a">${__("No project assignments yet. Run demo seed to evaluate.")}</div>`);
+			}
+			const maxProjects = Math.max(1, ...people.map((p) => p.projects || 0));
+			people.forEach((p) => {
+				const width = Math.round(((p.projects || 0) / maxProjects) * 100);
+				$people.append(`
+					<div style="margin:10px 0;">
+						<div style="display:flex;justify-content:space-between;font-weight:700;">
+							<span>${frappe.utils.escape_html(p.label)}</span>
+							<span style="color:#0B5FFF">${p.projects} projects · ${p.avg_progress}% avg</span>
+						</div>
+						<div style="height:10px;background:#e8eef7;border-radius:999px;overflow:hidden;margin-top:4px;">
+							<div style="width:${width}%;height:100%;background:linear-gradient(90deg,#0B5FFF,#FF7A00);"></div>
+						</div>
+					</div>
+				`);
+			});
+
+			const $prog = $("#ic-project-progress").empty();
+			(data.project_progress || []).forEach((p) => {
+				$prog.append(`
+					<div style="margin:12px 0;">
+						<div style="display:flex;justify-content:space-between;gap:8px;">
+							<strong>${frappe.utils.escape_html(p.label)}</strong>
+							<span style="color:#5b677a">${frappe.utils.escape_html(p.owner)} · ${p.progress}%</span>
+						</div>
+						<div style="height:12px;background:#e8eef7;border-radius:999px;overflow:hidden;margin-top:4px;">
+							<div style="width:${p.progress || 0}%;height:100%;background:linear-gradient(90deg,#0B5FFF,#FF7A00);"></div>
+						</div>
+					</div>
+				`);
+			});
 		},
+	});
+
+	page.set_primary_action(__("Load Demo Data"), () => {
+		frappe.call({
+			method: "instacertify.ic_setup.seed.run_seed_demo",
+			freeze: true,
+			callback(r) {
+				frappe.msgprint(__("Demo data ready. Open ABC Electronics project portal from IC Project."));
+				frappe.pages["ic-dashboard"].on_page_load(wrapper);
+			},
+		});
 	});
 };
