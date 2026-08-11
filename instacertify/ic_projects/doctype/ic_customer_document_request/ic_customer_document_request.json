@@ -31,7 +31,9 @@
    "label": "Customer",
    "fieldtype": "Link",
    "options": "Customer",
-   "reqd": 1
+   "reqd": 1,
+   "description": "Select from the customer dropdown (search by name)",
+   "in_standard_filter": 1
   },
   {
    "fieldname": "service",

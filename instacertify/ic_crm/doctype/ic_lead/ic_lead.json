@@ -156,9 +156,11 @@
   },
   {
    "fieldname": "customer",
-   "label": "Linked Customer",
+   "label": "Customer",
    "fieldtype": "Link",
-   "options": "Customer"
+   "options": "Customer",
+   "description": "Select from the customer dropdown (search by name)",
+   "in_standard_filter": 1
   },
   {
    "fieldname": "optional_details_section",

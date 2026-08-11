@@ -1,5 +1,58 @@
 import frappe
 from frappe import _
+from frappe.desk.reportview import get_filters_cond, get_match_cond
+
+
+@frappe.whitelist()
+@frappe.validate_and_sanitize_search_inputs
+def customer_link_query(doctype, txt, searchfield, start, page_len, filters):
+	"""Searchable Customer dropdown — shows customer name + ID."""
+	filters = filters or {}
+	conditions = []
+
+	# Optional country filter: India / Other (from quotation / invoice)
+	country = filters.pop("customer_country", None) or filters.pop("billing_country", None)
+	country_join = ""
+	country_cond = ""
+	if country in ("India", "Other"):
+		country_join = """
+			LEFT JOIN `tabDynamic Link` dl
+				ON dl.link_doctype = 'Customer' AND dl.link_name = cust.name AND dl.parenttype = 'Address'
+			LEFT JOIN `tabAddress` addr ON addr.name = dl.parent
+		"""
+		if country == "India":
+			country_cond = " AND (addr.country IS NULL OR addr.country = '' OR addr.country = 'India') "
+		else:
+			country_cond = " AND addr.country IS NOT NULL AND addr.country != '' AND addr.country != 'India' "
+
+	txt = txt or ""
+	return frappe.db.sql(
+		f"""
+		SELECT DISTINCT cust.name, cust.customer_name, cust.customer_group, cust.territory
+		FROM `tabCustomer` cust
+		{country_join}
+		WHERE cust.docstatus < 2
+			AND cust.disabled = 0
+			AND (
+				cust.name LIKE %(txt)s
+				OR cust.customer_name LIKE %(txt)s
+				OR IFNULL(cust.customer_group, '') LIKE %(txt)s
+			)
+			{country_cond}
+			{get_filters_cond("Customer", filters, conditions, ignore_permissions=True)}
+			{get_match_cond("Customer")}
+		ORDER BY
+			CASE WHEN cust.customer_name LIKE %(exact)s THEN 0 ELSE 1 END,
+			cust.customer_name ASC
+		LIMIT %(start)s, %(page_len)s
+		""",
+		{
+			"txt": f"%{txt}%",
+			"exact": f"{txt}%",
+			"start": start,
+			"page_len": page_len,
+		},
+	)
 
 
 @frappe.whitelist()
