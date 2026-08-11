@@ -1,0 +1,216 @@
+{
+ "name": "IC Asset",
+ "autoname": "field:asset_code",
+ "naming_rule": "By fieldname",
+ "title_field": "asset_name",
+ "search_fields": "asset_code,custodian,status",
+ "fields": [
+  {
+   "fieldname": "asset_code",
+   "label": "Asset Code",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "asset_name",
+   "label": "Asset Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "asset_category",
+   "label": "Category",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "column_break_11c05b",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nAvailable\nAssigned\nUnder Maintenance\nDisposed",
+   "default": "Available",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "acquisition_date",
+   "label": "Acquisition Date",
+   "fieldtype": "Date",
+   "default": "Today"
+  },
+  {
+   "fieldname": "asset_value",
+   "label": "Asset Value",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR"
+  },
+  {
+   "fieldname": "custody_section",
+   "label": "Custody",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "custodian",
+   "label": "Who Has the Asset",
+   "fieldtype": "Link",
+   "options": "User",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "location",
+   "label": "Location",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "registered_by",
+   "label": "Registered By",
+   "fieldtype": "Link",
+   "options": "User",
+   "default": "__user"
+  },
+  {
+   "fieldname": "details_section",
+   "label": "Details",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "serial_number",
+   "label": "Serial Number",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "description",
+   "label": "Description",
+   "fieldtype": "Small Text"
+  },
+  {
+   "fieldname": "attachment",
+   "label": "Photo / Document",
+   "fieldtype": "Attach"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC HR",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Assets",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

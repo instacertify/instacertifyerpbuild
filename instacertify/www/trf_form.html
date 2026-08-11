@@ -1,0 +1,56 @@
+{% extends "templates/web.html" %}
+{% block title %}Test Request Form — InstaCertify{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal"><div class="ic-portal-shell">
+<div class="ic-portal-brand"><div class="logo">InstaCertify</div><div>Test Request Form</div></div>
+<div class="ic-portal-card">
+	<div id="ic-loading">Loading TRF…</div>
+	<div id="ic-content" style="display:none;">
+		<h1 id="t-title"></h1>
+		<div class="ic-meta">
+			<div><label>TRF No</label><span id="t-name"></span></div>
+			<div><label>Customer</label><span id="t-customer"></span></div>
+			<div><label>Test</label><span id="t-test"></span></div>
+			<div><label>Standard</label><span id="t-std"></span></div>
+			<div><label>Samples</label><span id="t-samples"></span></div>
+			<div><label>Lab</label><span id="t-lab"></span></div>
+			<div><label>Accreditation</label><span id="t-acc"></span></div>
+			<div><label>Timeline</label><span id="t-tl"></span></div>
+		</div>
+		<h3>Remarks</h3>
+		<div id="t-remarks"></div>
+		<p style="margin-top:16px;color:#5b677a;">Please coordinate sample dispatch with your InstaCertify contact. Once the sample is received you will receive tracking updates.</p>
+	</div>
+	<div id="ic-error" style="display:none;color:#b00020;"></div>
+</div></div></div>
+<script>
+const token = {{ token|tojson }};
+frappe.ready(() => {
+	frappe.call({
+		method: 'instacertify.api.testing.get_trf',
+		args: { token },
+		callback(r) {
+			const d = r.message;
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-content').style.display='block';
+			document.getElementById('t-title').textContent = d.title;
+			document.getElementById('t-name').textContent = d.name;
+			document.getElementById('t-customer').textContent = d.customer;
+			document.getElementById('t-test').textContent = d.test_name;
+			document.getElementById('t-std').textContent = d.applicable_standard || '—';
+			document.getElementById('t-samples').textContent = d.no_of_samples || '—';
+			document.getElementById('t-lab').textContent = d.lab || '—';
+			document.getElementById('t-acc').textContent = d.accreditation || '—';
+			document.getElementById('t-tl').textContent = d.testing_timeline || '—';
+			document.getElementById('t-remarks').textContent = d.remarks || '—';
+		},
+		error() {
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-error').style.display='block';
+			document.getElementById('ic-error').textContent='Invalid TRF link.';
+		}
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,70 @@
+{
+ "name": "IC Quotation Testing Line",
+ "istable": 1,
+ "fields": [
+  {
+   "fieldname": "test_name",
+   "label": "Test Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "applicable_standard",
+   "label": "Applicable Standard",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "no_of_samples",
+   "label": "No. of Samples",
+   "fieldtype": "Int",
+   "default": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "testing_charges",
+   "label": "Testing Charges",
+   "fieldtype": "Currency",
+   "options": "currency",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "lab",
+   "label": "Testing Lab",
+   "fieldtype": "Link",
+   "options": "IC Lab",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "accreditation",
+   "label": "Lab Accreditation",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "testing_timeline",
+   "label": "Testing Timeline",
+   "fieldtype": "Data",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR"
+  }
+ ],
+ "permissions": [],
+ "doctype": "DocType",
+ "module": "IC Quotation",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 1,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

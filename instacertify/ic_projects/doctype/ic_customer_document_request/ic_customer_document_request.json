@@ -1,0 +1,199 @@
+{
+ "name": "IC Customer Document Request",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "title",
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-DOC-.YYYY.-.####",
+   "default": "IC-DOC-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "title",
+   "label": "Title",
+   "fieldtype": "Data",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project",
+   "label": "Project",
+   "fieldtype": "Link",
+   "options": "IC Project",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1
+  },
+  {
+   "fieldname": "service",
+   "label": "Service",
+   "fieldtype": "Link",
+   "options": "IC Service"
+  },
+  {
+   "fieldname": "request_type",
+   "label": "Request Type",
+   "fieldtype": "Select",
+   "options": "\nGeneral\nTest Request Form\nChecklist Upload",
+   "default": "Checklist Upload"
+  },
+  {
+   "fieldname": "column_break_5bfa73",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nOpen\nShared\nPartially Uploaded\nCompleted",
+   "default": "Open",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "share_token",
+   "label": "Share Token",
+   "fieldtype": "Data",
+   "read_only": 1,
+   "hidden": 1
+  },
+  {
+   "fieldname": "share_link",
+   "label": "Customer Upload Link",
+   "fieldtype": "Small Text",
+   "read_only": 1
+  },
+  {
+   "fieldname": "requested_by",
+   "label": "Requested By",
+   "fieldtype": "Link",
+   "options": "User",
+   "default": "__user"
+  },
+  {
+   "fieldname": "checklist_section",
+   "label": "Checklist",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "checklist_items",
+   "label": "Checklist Items",
+   "fieldtype": "Table",
+   "options": "IC Document Checklist Row"
+  },
+  {
+   "fieldname": "qr_section",
+   "label": "QR",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "qr_code",
+   "label": "QR Code",
+   "fieldtype": "Attach Image",
+   "read_only": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Projects",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

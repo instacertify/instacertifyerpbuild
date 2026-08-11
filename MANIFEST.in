@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.txt
+include *.py
+recursive-include instacertify *.css
+recursive-include instacertify *.csv
+recursive-include instacertify *.html
+recursive-include instacertify *.ico
+recursive-include instacertify *.js
+recursive-include instacertify *.json
+recursive-include instacertify *.md
+recursive-include instacertify *.png
+recursive-include instacertify *.py
+recursive-include instacertify *.svg
+recursive-include instacertify *.txt
+recursive-exclude instacertify *.pyc

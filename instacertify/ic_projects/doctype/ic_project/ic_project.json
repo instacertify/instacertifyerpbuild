@@ -1,0 +1,277 @@
+{
+ "name": "IC Project",
+ "autoname": "naming_series:",
+ "naming_rule": "By \"Naming Series\" field",
+ "title_field": "project_name",
+ "search_fields": "customer,service,status,sales_person",
+ "track_seen": 1,
+ "fields": [
+  {
+   "fieldname": "naming_series",
+   "label": "Series",
+   "fieldtype": "Select",
+   "options": "IC-PRJ-.YYYY.-.####",
+   "default": "IC-PRJ-.YYYY.-.####",
+   "reqd": 1
+  },
+  {
+   "fieldname": "project_name",
+   "label": "Project Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "status",
+   "label": "Status",
+   "fieldtype": "Select",
+   "options": "\nOpen\nIn Progress\nOn Hold\nCompleted\nCancelled",
+   "default": "Open",
+   "reqd": 1,
+   "in_list_view": 1,
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "percent_complete",
+   "label": "Progress %",
+   "fieldtype": "Percent",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_badce1",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "customer",
+   "label": "Customer",
+   "fieldtype": "Link",
+   "options": "Customer",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "quotation",
+   "label": "Source Quotation",
+   "fieldtype": "Link",
+   "options": "IC Quotation"
+  },
+  {
+   "fieldname": "service",
+   "label": "Service",
+   "fieldtype": "Link",
+   "options": "IC Service",
+   "reqd": 1
+  },
+  {
+   "fieldname": "sales_person",
+   "label": "Sales Person",
+   "fieldtype": "Link",
+   "options": "User",
+   "in_standard_filter": 1
+  },
+  {
+   "fieldname": "operations_manager",
+   "label": "Operations Manager",
+   "fieldtype": "Link",
+   "options": "User"
+  },
+  {
+   "fieldname": "timeline_section",
+   "label": "Timeline",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "start_date",
+   "label": "Start Date",
+   "fieldtype": "Date",
+   "default": "Today"
+  },
+  {
+   "fieldname": "expected_end_date",
+   "label": "Expected End Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "actual_end_date",
+   "label": "Actual End Date",
+   "fieldtype": "Date"
+  },
+  {
+   "fieldname": "progress_remarks_section",
+   "label": "Progress Remarks",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "progress_log",
+   "label": "Progress Log",
+   "fieldtype": "Table",
+   "options": "IC Project Progress"
+  },
+  {
+   "fieldname": "working_hours_section",
+   "label": "Working Hours",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "working_hours",
+   "label": "Working Hours",
+   "fieldtype": "Table",
+   "options": "IC Working Hour"
+  },
+  {
+   "fieldname": "delivered_records_(pdf_/_image)_section",
+   "label": "Delivered Records (PDF / Image)",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "documents",
+   "label": "Documents",
+   "fieldtype": "Table",
+   "options": "IC Project Document"
+  },
+  {
+   "fieldname": "login_credentials_section",
+   "label": "Login Credentials",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "credentials",
+   "label": "Credentials",
+   "fieldtype": "Table",
+   "options": "IC Project Credential"
+  },
+  {
+   "fieldname": "commitments_/_incidents_section",
+   "label": "Commitments / Incidents",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "incidents",
+   "label": "Incidents & Commitments",
+   "fieldtype": "Table",
+   "options": "IC Project Incident"
+  },
+  {
+   "fieldname": "quotes_&_invoicing_section",
+   "label": "Quotes & Invoicing",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "billing_links",
+   "label": "Quotes & Invoices",
+   "fieldtype": "Table",
+   "options": "IC Project Invoice Link"
+  },
+  {
+   "fieldname": "notes_section",
+   "label": "Notes",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "notes",
+   "label": "Notes",
+   "fieldtype": "Text Editor"
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Projects",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

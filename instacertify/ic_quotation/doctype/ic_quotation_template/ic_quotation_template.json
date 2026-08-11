@@ -1,0 +1,231 @@
+{
+ "name": "IC Quotation Template",
+ "autoname": "field:template_name",
+ "naming_rule": "By fieldname",
+ "title_field": "template_name",
+ "fields": [
+  {
+   "fieldname": "template_name",
+   "label": "Template Name",
+   "fieldtype": "Data",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "service",
+   "label": "Service",
+   "fieldtype": "Link",
+   "options": "IC Service",
+   "reqd": 1,
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "category",
+   "label": "Category",
+   "fieldtype": "Select",
+   "options": "\nCertification\nTesting\nConsulting\nRenewal\nAudit\nTraining\nOther",
+   "in_list_view": 1
+  },
+  {
+   "fieldname": "column_break_2eab92",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "is_active",
+   "label": "Is Active",
+   "fieldtype": "Check",
+   "default": 1
+  },
+  {
+   "fieldname": "currency",
+   "label": "Currency",
+   "fieldtype": "Link",
+   "options": "Currency",
+   "default": "INR",
+   "reqd": 1
+  },
+  {
+   "fieldname": "scope_section",
+   "label": "Scope",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "scope_of_work",
+   "label": "Scope of Work",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "certification_timeline",
+   "label": "Certification / Delivery Timeline",
+   "fieldtype": "Text"
+  },
+  {
+   "fieldname": "cost_lines_section",
+   "label": "Cost Lines",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "cost_lines",
+   "label": "Cost Lines",
+   "fieldtype": "Table",
+   "options": "IC Quotation Cost Line"
+  },
+  {
+   "fieldname": "testing_details_section",
+   "label": "Testing Details",
+   "fieldtype": "Section Break",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "include_testing",
+   "label": "Include Testing Block",
+   "fieldtype": "Check"
+  },
+  {
+   "fieldname": "default_lab",
+   "label": "Default Lab",
+   "fieldtype": "Link",
+   "options": "IC Lab"
+  },
+  {
+   "fieldname": "applicable_standard",
+   "label": "Applicable Standard",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "no_of_samples",
+   "label": "No. of Samples",
+   "fieldtype": "Int",
+   "default": 1
+  },
+  {
+   "fieldname": "testing_timeline",
+   "label": "Testing Timeline",
+   "fieldtype": "Data"
+  },
+  {
+   "fieldname": "legal_section",
+   "label": "Legal",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "force_majeure",
+   "label": "Force Majeure",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "terms_and_conditions",
+   "label": "Terms and Conditions",
+   "fieldtype": "Text Editor"
+  },
+  {
+   "fieldname": "source_quote_section",
+   "label": "Source Quote",
+   "fieldtype": "Section Break",
+   "collapsible": 0
+  },
+  {
+   "fieldname": "source_quotation",
+   "label": "Created From Quotation",
+   "fieldtype": "Link",
+   "options": "IC Quotation",
+   "read_only": 1
+  }
+ ],
+ "permissions": [
+  {
+   "role": "IC Admin",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "System Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 1,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC All Ops Manager",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 1,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Sales Person",
+   "read": 1,
+   "write": 1,
+   "create": 1,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  },
+  {
+   "role": "IC Operations Manager",
+   "read": 1,
+   "write": 0,
+   "create": 0,
+   "delete": 0,
+   "submit": 0,
+   "cancel": 0,
+   "amend": 0,
+   "report": 1,
+   "export": 0,
+   "import": 0,
+   "print": 1,
+   "email": 1,
+   "share": 1
+  }
+ ],
+ "doctype": "DocType",
+ "module": "IC Quotation",
+ "engine": "InnoDB",
+ "track_changes": 1,
+ "editable_grid": 0,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "creation": "2026-01-01 00:00:00.000000",
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "owner": "Administrator"
+}

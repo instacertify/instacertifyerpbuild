@@ -1,0 +1,49 @@
+{% extends "templates/web.html" %}
+{% block title %}Test Report — InstaCertify{% endblock %}
+{% block page_content %}
+<link rel="stylesheet" href="/assets/instacertify/css/instacertify_web.css">
+<div class="ic-portal"><div class="ic-portal-shell">
+<div class="ic-portal-brand"><div class="logo">InstaCertify</div><div>Test Report</div></div>
+<div class="ic-portal-card">
+	<div id="ic-loading">Loading report…</div>
+	<div id="ic-content" style="display:none;">
+		<h1 id="r-title"></h1>
+		<div class="ic-meta">
+			<div><label>Request</label><span id="r-name"></span></div>
+			<div><label>Test</label><span id="r-test"></span></div>
+			<div><label>Lab</label><span id="r-lab"></span></div>
+			<div><label>Status</label><span id="r-status"></span></div>
+		</div>
+		<p><a id="r-file" class="ic-btn ic-btn-accept" href="#" target="_blank">Download Report</a></p>
+		<img id="r-qr" class="ic-qr" style="display:none;" alt="QR"/>
+	</div>
+	<div id="ic-error" style="display:none;color:#b00020;"></div>
+</div></div></div>
+<script>
+const token = {{ token|tojson }};
+frappe.ready(() => {
+	frappe.call({
+		method: 'instacertify.api.testing.get_report',
+		args: { token },
+		callback(r) {
+			const d = r.message;
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-content').style.display='block';
+			document.getElementById('r-title').textContent = d.title;
+			document.getElementById('r-name').textContent = d.name;
+			document.getElementById('r-test').textContent = d.test_name;
+			document.getElementById('r-lab').textContent = d.lab || '—';
+			document.getElementById('r-status').textContent = d.sample_status;
+			const a = document.getElementById('r-file');
+			a.href = d.report_file || '#';
+			if (d.qr_code) { const img=document.getElementById('r-qr'); img.src=d.qr_code; img.style.display='block'; }
+		},
+		error() {
+			document.getElementById('ic-loading').style.display='none';
+			document.getElementById('ic-error').style.display='block';
+			document.getElementById('ic-error').textContent='Invalid report link.';
+		}
+	});
+});
+</script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{
+ "content": null,
+ "creation": "2026-01-01 00:00:00.000000",
+ "docstatus": 0,
+ "doctype": "Page",
+ "idx": 0,
+ "modified": "2026-01-01 00:00:00.000000",
+ "modified_by": "Administrator",
+ "module": "IC Setup",
+ "name": "ic-dashboard",
+ "owner": "Administrator",
+ "page_name": "ic-dashboard",
+ "roles": [
+  {
+   "role": "IC Admin"
+  },
+  {
+   "role": "IC All Ops Manager"
+  },
+  {
+   "role": "IC Sales Person"
+  },
+  {
+   "role": "IC Operations Manager"
+  },
+  {
+   "role": "IC HR"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "standard": "Yes",
+ "system_page": 0,
+ "title": "InstaCertify Dashboard"
+}

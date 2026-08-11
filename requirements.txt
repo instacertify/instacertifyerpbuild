@@ -1,0 +1,3 @@
+# Runtime dependencies for the InstaCertify Frappe app
+qrcode>=7.4
+Pillow>=10.0
